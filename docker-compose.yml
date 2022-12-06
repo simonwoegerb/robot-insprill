@@ -1,0 +1,11 @@
+version: "3.8"
+
+services:
+  robot-insprill:
+    build: .
+    container_name: robot-insprill
+    restart: always
+    environment:
+      DISCORD_TOKEN: token
+    volumes:
+      - ./config.yml:/config.yml
