@@ -41,8 +41,6 @@ tasks {
         manifest {
             attributes["Main-Class"] = "net.insprill.robotinsprill.RobotInsprillKt"
         }
-
-        minimize()
     }
 
     build {
