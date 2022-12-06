@@ -31,6 +31,10 @@ tasks {
         kotlinOptions.jvmTarget = "17"
     }
 
+    jar {
+        enabled = false
+    }
+
     shadowJar {
         archiveClassifier.set("")
 
