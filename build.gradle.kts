@@ -17,6 +17,10 @@ dependencies {
     // Discord
     implementation("dev.kord:kord-core:0.8.0-M17")
 
+    // Configuration
+    implementation("com.sksamuel.hoplite:hoplite-core:2.7.0")
+    implementation("com.sksamuel.hoplite:hoplite-yaml:2.7.0")
+
     // Logging
     implementation("ch.qos.logback:logback-classic:1.4.5")
     implementation("io.github.microutils:kotlin-logging-jvm:3.0.4")
