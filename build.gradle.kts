@@ -1,3 +1,4 @@
+import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 import java.io.ByteArrayOutputStream
 
 plugins {
@@ -22,6 +23,10 @@ dependencies {
 }
 
 tasks {
+    withType<KotlinCompile> {
+        kotlinOptions.jvmTarget = "17"
+    }
+
     shadowJar {
         archiveClassifier.set("")
 
@@ -34,6 +39,12 @@ tasks {
 
     build {
         dependsOn(shadowJar)
+    }
+}
+
+java {
+    toolchain {
+        languageVersion.set(JavaLanguageVersion.of(17))
     }
 }
 
