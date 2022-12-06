@@ -114,8 +114,5 @@ Network Trash Folder
 Temporary Items
 .apdisk
 
-
-
-# Added by cargo
-
-/target
+### Environment variables
+.env*
