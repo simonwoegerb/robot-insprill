@@ -1,4 +1,18 @@
 commands:
   message:
     binfile:
-      bin-url: paste.insprill.net
+      codebin: LUCKO_PASTE
+
+codebin:
+  services:
+    HASTEBIN:
+      - paste.md-5.net
+      - paste.helpch.at
+      - hastebin.net
+    SOURCE_BIN:
+      - sourceb.in
+    LUCKO_PASTE:
+      - paste.insprill.net
+      - paste.mufin.live
+    PASTEBIN:
+      - pastebin.com

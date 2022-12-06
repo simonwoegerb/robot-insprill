@@ -7,5 +7,6 @@ services:
     restart: always
     environment:
       DISCORD_TOKEN: token
+      PASTEBIN_KEY: key # Only set this if you're uploading to pastebin
     volumes:
       - ./config.yml:/config.yml

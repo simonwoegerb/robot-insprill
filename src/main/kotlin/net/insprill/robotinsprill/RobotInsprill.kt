@@ -28,7 +28,7 @@ suspend fun main() {
 class RobotInsprill(val logger: KLogger, val kord: Kord) {
 
     private val commandManager: CommandManager
-    private val config: BotConfig
+    val config: BotConfig
 
     init {
         logger.info("Starting Robot Insprill")
@@ -39,7 +39,12 @@ class RobotInsprill(val logger: KLogger, val kord: Kord) {
             .loadConfig<BotConfig>()
 
         config = configLoader.getOrElse {
-            logger.error("Failed to load configuration file: ${it.description()}")
+            logger.error(it.description())
+            exitProcess(1)
+        }
+
+        config.validate()?.let {
+            logger.error(it)
             exitProcess(1)
         }
 
@@ -53,7 +58,7 @@ class RobotInsprill(val logger: KLogger, val kord: Kord) {
     suspend fun registerCommands() = apply {
         commandManager.setupEventHandlers()
         commandManager.registerMessage(
-            BinFile()
+            BinFile(this)
         )
     }
 

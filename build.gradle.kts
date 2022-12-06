@@ -21,6 +21,13 @@ dependencies {
     implementation("com.sksamuel.hoplite:hoplite-core:2.7.0")
     implementation("com.sksamuel.hoplite:hoplite-yaml:2.7.0")
 
+    // Web requests
+    implementation("com.github.kittinunf.fuel:fuel:2.3.1")
+    implementation("com.github.kittinunf.fuel:fuel-coroutines:2.3.1")
+
+    // Json serialization/deserialization
+    implementation("com.google.code.gson:gson:2.10")
+
     // Logging
     implementation("ch.qos.logback:logback-classic:1.4.5")
     implementation("io.github.microutils:kotlin-logging-jvm:3.0.4")
