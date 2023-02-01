@@ -286,3 +286,18 @@ codebin:
       - paste.mufin.live
     PASTEBIN:
       - pastebin.com
+
+audit:
+  channel-ids:
+    365315337240969226: 699125029580832851
+    709740759552884788: 793644931943497809
+  events:
+    members:
+      banned: true
+      unbanned: true
+      joined: true
+      left: true
+      updated: true
+    messages:
+      deleted: true
+      edited: true

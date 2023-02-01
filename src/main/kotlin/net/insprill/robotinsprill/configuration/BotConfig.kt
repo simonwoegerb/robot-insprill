@@ -5,7 +5,7 @@ import dev.kord.rest.builder.message.EmbedBuilder
 import kotlinx.datetime.Instant
 import net.insprill.robotinsprill.codebin.BinService
 
-data class BotConfig(val commands: Commands, val codebin: Bin) {
+data class BotConfig(val commands: Commands, val codebin: Bin, val audit: Audit) {
     data class Commands(val message: Message, val slash: Slash) {
         data class Message(val binfiles: BinFiles) {
             data class BinFiles(val codebin: BinService)
@@ -55,6 +55,20 @@ data class BotConfig(val commands: Commands, val codebin: Bin) {
     }
 
     data class Bin(val services: Map<BinService, List<String>>)
+
+    data class Audit(val channelIds: Map<ULong, ULong>, val events: Events) {
+        data class Events(val members: Members, val messages: Messages) {
+            data class Members(
+                val banned: Boolean,
+                val unbanned: Boolean,
+                val joined: Boolean,
+                val left: Boolean,
+                val updated: Boolean
+            )
+
+            data class Messages(val deleted: Boolean, val edited: Boolean)
+        }
+    }
 
     fun validate(): String? {
         if (commands.message.binfiles.codebin == BinService.PASTEBIN && System.getenv("PASTEBIN_KEY") == null) {

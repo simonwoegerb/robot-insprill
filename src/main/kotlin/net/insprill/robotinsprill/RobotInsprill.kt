@@ -4,6 +4,7 @@ import com.sksamuel.hoplite.ConfigLoaderBuilder
 import com.sksamuel.hoplite.addFileSource
 import com.sksamuel.hoplite.fp.getOrElse
 import dev.kord.core.Kord
+import dev.kord.core.supplier.EntitySupplyStrategy
 import dev.kord.gateway.Intent
 import dev.kord.gateway.PrivilegedIntent
 import java.io.File
@@ -11,6 +12,7 @@ import java.util.*
 import kotlin.system.exitProcess
 import mu.KLogger
 import mu.KotlinLogging
+import net.insprill.robotinsprill.audit.AuditManager
 import net.insprill.robotinsprill.command.CommandManager
 import net.insprill.robotinsprill.command.DevCommandManager
 import net.insprill.robotinsprill.command.ProdCommandManager
@@ -21,9 +23,15 @@ import net.insprill.robotinsprill.configuration.BotConfig
 
 suspend fun main() {
     val logger = KotlinLogging.logger("Robot Insprill")
-    val kord = Kord(System.getenv("DISCORD_TOKEN"))
+    val kord = Kord(System.getenv("DISCORD_TOKEN")) {
+        defaultStrategy = EntitySupplyStrategy.cacheWithCachingRestFallback
+        cache {
+            messages(lruCache(2048))
+        }
+    }
     RobotInsprill(logger, kord)
         .registerCommands()
+        .registerAuditEvents()
         .login()
 }
 
@@ -69,6 +77,10 @@ class RobotInsprill(val logger: KLogger, val kord: Kord) {
         commandManager.registerSlash(
             *CustomCommand.buildCommandArray(this.config)
         )
+    }
+
+    fun registerAuditEvents() = apply {
+        AuditManager(this).setupEventHandlers()
     }
 
     suspend fun login() {
