@@ -15,6 +15,7 @@ import net.insprill.robotinsprill.command.CommandManager
 import net.insprill.robotinsprill.command.DevCommandManager
 import net.insprill.robotinsprill.command.ProdCommandManager
 import net.insprill.robotinsprill.command.message.BinFile
+import net.insprill.robotinsprill.command.message.Google
 import net.insprill.robotinsprill.command.slash.CustomCommand
 import net.insprill.robotinsprill.configuration.BotConfig
 
@@ -64,7 +65,8 @@ class RobotInsprill(val logger: KLogger, val kord: Kord) {
 
         logger.info("Registering message commands")
         commandManager.registerMessage(
-            BinFile(this)
+            BinFile(this),
+            Google()
         )
 
         logger.info("Registering slash commands")
