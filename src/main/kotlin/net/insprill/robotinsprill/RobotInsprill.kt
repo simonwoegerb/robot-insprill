@@ -14,7 +14,7 @@ import mu.KotlinLogging
 import net.insprill.robotinsprill.command.CommandManager
 import net.insprill.robotinsprill.command.DevCommandManager
 import net.insprill.robotinsprill.command.ProdCommandManager
-import net.insprill.robotinsprill.command.message.BinFile
+import net.insprill.robotinsprill.command.message.BinFiles
 import net.insprill.robotinsprill.command.message.Google
 import net.insprill.robotinsprill.command.slash.CustomCommand
 import net.insprill.robotinsprill.configuration.BotConfig
@@ -63,7 +63,7 @@ class RobotInsprill(val logger: KLogger, val kord: Kord) {
         logger.info("Setting up command handlers")
         commandManager.setupEventHandlers()
         commandManager.registerMessage(
-            BinFile(this),
+            BinFiles(this),
             Google()
         )
         commandManager.registerSlash(

@@ -1,6 +1,6 @@
 commands:
   message:
-    binfile:
+    binfiles:
       codebin: LUCKO_PASTE
   slash:
     custom:

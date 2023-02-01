@@ -7,8 +7,8 @@ import net.insprill.robotinsprill.codebin.BinService
 
 data class BotConfig(val commands: Commands, val codebin: Bin) {
     data class Commands(val message: Message, val slash: Slash) {
-        data class Message(val binfile: BinFile) {
-            data class BinFile(val codebin: BinService)
+        data class Message(val binfiles: BinFiles) {
+            data class BinFiles(val codebin: BinService)
         }
 
         data class Slash(val custom: List<CustomCommand>) {
@@ -57,7 +57,7 @@ data class BotConfig(val commands: Commands, val codebin: Bin) {
     data class Bin(val services: Map<BinService, List<String>>)
 
     fun validate(): String? {
-        if (commands.message.binfile.codebin == BinService.PASTEBIN && System.getenv("PASTEBIN_KEY") == null) {
+        if (commands.message.binfiles.codebin == BinService.PASTEBIN && System.getenv("PASTEBIN_KEY") == null) {
             return "The PASTEBIN_KEY environment variable must be set to do uploads to pastebin!"
         }
         return null

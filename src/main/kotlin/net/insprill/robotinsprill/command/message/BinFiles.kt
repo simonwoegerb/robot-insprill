@@ -7,10 +7,10 @@ import io.ktor.util.logging.error
 import net.insprill.robotinsprill.RobotInsprill
 import net.insprill.robotinsprill.extension.stringContent
 
-class BinFile(private val robot: RobotInsprill) : MessageCommand() {
+class BinFiles(private val robot: RobotInsprill) : MessageCommand() {
 
     override val name: String
-        get() = "binfile"
+        get() = "Bin Files"
 
     override suspend fun execute(context: MessageCommandInteractionCreateEvent) {
         val response = context.interaction.deferPublicResponse()
@@ -27,7 +27,7 @@ class BinFile(private val robot: RobotInsprill) : MessageCommand() {
         val bins: MutableMap<String, String> = HashMap()
         context.interaction.getTarget().attachments.forEach { attachment ->
             bins[attachment.filename] = attachment.stringContent().fold({ content ->
-                robot.config.commands.message.binfile.codebin.uploadBin(robot.config, content)
+                robot.config.commands.message.binfiles.codebin.uploadBin(robot.config, content)
                     .fold({ url -> url }, { err ->
                         robot.logger.error(err)
                         err.message ?: "An error occurred 1"
