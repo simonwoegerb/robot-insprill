@@ -22,6 +22,7 @@ class ProdCommandManager(private val robot: RobotInsprill) : CommandManager() {
         commands.forEach { command ->
             robot.kord.createGlobalChatInputCommand(command.name, command.description) { command.setup(this) }
             slashCommands[command.name] = command
+            robot.logger.info("Registered slash command '${command.name}'")
         }
     }
 
@@ -29,6 +30,7 @@ class ProdCommandManager(private val robot: RobotInsprill) : CommandManager() {
         commands.forEach { command ->
             robot.kord.createGlobalMessageCommand(command.name) { command.setup(this) }
             messageCommands[command.name] = command
+            robot.logger.info("Registered message command '${command.name}'")
         }
     }
 

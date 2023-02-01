@@ -28,7 +28,7 @@ class DevCommandManager(private val robot: RobotInsprill) : CommandManager() {
                 command.description
             ) { command.setup(this) }
             slashCommands[cmdName] = command
-
+            robot.logger.info("Registered slash command '$cmdName'")
         }
     }
 
@@ -40,6 +40,7 @@ class DevCommandManager(private val robot: RobotInsprill) : CommandManager() {
                 cmdName,
             ) { command.setup(this) }
             messageCommands[cmdName] = command
+            robot.logger.info("Registered message command '$cmdName'")
         }
     }
 

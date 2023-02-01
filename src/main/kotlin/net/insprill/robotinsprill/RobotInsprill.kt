@@ -62,14 +62,10 @@ class RobotInsprill(val logger: KLogger, val kord: Kord) {
     suspend fun registerCommands() = apply {
         logger.info("Setting up command handlers")
         commandManager.setupEventHandlers()
-
-        logger.info("Registering message commands")
         commandManager.registerMessage(
             BinFile(this),
             Google()
         )
-
-        logger.info("Registering slash commands")
         commandManager.registerSlash(
             *CustomCommand.buildCommandArray(this.config)
         )
