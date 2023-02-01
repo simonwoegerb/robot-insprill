@@ -6,8 +6,7 @@ services:
     container_name: robot-insprill
     restart: always
     environment:
-      DISCORD_TOKEN: token
-      PASTEBIN_KEY: key # Only set this if you're uploading to pastebin
-#      DEV_GUILD_ID: 000000000000000000 # Uncomment to enable dev mode for the provided guild
+      DISCORD_TOKEN: token # The token used to log in to the bot
+      PASTEBIN_KEY: key # This only needs to be set if you're uploading to pastebin
     volumes:
       - ./config.yml:/config.yml
