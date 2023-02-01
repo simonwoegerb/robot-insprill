@@ -20,6 +20,7 @@ dependencies {
     // Configuration
     implementation("com.sksamuel.hoplite:hoplite-core:2.7.1")
     implementation("com.sksamuel.hoplite:hoplite-yaml:2.7.1")
+    implementation("com.sksamuel.hoplite:hoplite-datetime:2.7.1")
 
     // Web requests
     implementation("com.github.kittinunf.fuel:fuel:2.3.1")
