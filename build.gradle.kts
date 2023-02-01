@@ -2,7 +2,7 @@ import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 import java.io.ByteArrayOutputStream
 
 plugins {
-    kotlin("jvm") version "1.7.20"
+    kotlin("jvm") version "1.8.0"
     id("com.github.johnrengelman.shadow") version "7.1.2"
 }
 
@@ -18,15 +18,15 @@ dependencies {
     implementation("dev.kord:kord-core:0.8.0-M17")
 
     // Configuration
-    implementation("com.sksamuel.hoplite:hoplite-core:2.7.0")
-    implementation("com.sksamuel.hoplite:hoplite-yaml:2.7.0")
+    implementation("com.sksamuel.hoplite:hoplite-core:2.7.1")
+    implementation("com.sksamuel.hoplite:hoplite-yaml:2.7.1")
 
     // Web requests
     implementation("com.github.kittinunf.fuel:fuel:2.3.1")
     implementation("com.github.kittinunf.fuel:fuel-coroutines:2.3.1")
 
     // Json serialization/deserialization
-    implementation("com.google.code.gson:gson:2.10")
+    implementation("com.google.code.gson:gson:2.10.1")
 
     // Logging
     implementation("ch.qos.logback:logback-classic:1.4.5")
