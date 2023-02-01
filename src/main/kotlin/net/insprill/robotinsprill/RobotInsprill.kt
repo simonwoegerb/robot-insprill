@@ -15,6 +15,7 @@ import net.insprill.robotinsprill.command.CommandManager
 import net.insprill.robotinsprill.command.DevCommandManager
 import net.insprill.robotinsprill.command.ProdCommandManager
 import net.insprill.robotinsprill.command.message.BinFile
+import net.insprill.robotinsprill.command.slash.CustomCommand
 import net.insprill.robotinsprill.configuration.BotConfig
 
 suspend fun main() {
@@ -33,21 +34,23 @@ class RobotInsprill(val logger: KLogger, val kord: Kord) {
     init {
         logger.info("Starting Robot Insprill")
 
-        val configLoader = ConfigLoaderBuilder.default()
+        logger.info("Parsing configuration file")
+        config = ConfigLoaderBuilder.default()
             .addFileSource(File("config.yml"))
             .build()
             .loadConfig<BotConfig>()
+            .getOrElse {
+                logger.error(it.description())
+                exitProcess(1)
+            }
 
-        config = configLoader.getOrElse {
-            logger.error(it.description())
-            exitProcess(1)
-        }
-
+        logger.info("Validating configuration file")
         config.validate()?.let {
             logger.error(it)
             exitProcess(1)
         }
 
+        logger.info("Using the ${if (DevCommandManager.guildId != null) "development" else "production"} command manager")
         commandManager = if (DevCommandManager.guildId != null) {
             DevCommandManager(this)
         } else {
@@ -56,13 +59,22 @@ class RobotInsprill(val logger: KLogger, val kord: Kord) {
     }
 
     suspend fun registerCommands() = apply {
+        logger.info("Setting up command handlers")
         commandManager.setupEventHandlers()
+
+        logger.info("Registering message commands")
         commandManager.registerMessage(
             BinFile(this)
+        )
+
+        logger.info("Registering slash commands")
+        commandManager.registerSlash(
+            *CustomCommand.buildCommandArray(this.config)
         )
     }
 
     suspend fun login() {
+        logger.info("Logging in")
         kord.login {
             @OptIn(PrivilegedIntent::class)
             intents += Intent.MessageContent
