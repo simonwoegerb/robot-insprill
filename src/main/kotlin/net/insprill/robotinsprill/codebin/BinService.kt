@@ -12,7 +12,7 @@ import net.insprill.robotinsprill.configuration.BotConfig
 
 @Suppress("unused")
 enum class BinService(private val downloadUrl: String) {
-    HASTEBIN("https://%s/raw/%s") {
+    HASTEBIN_LEGACY("https://%s/raw/%s") {
         override suspend fun uploadBinReq(domain: String, data: String): Request {
             return Fuel.post("https://$domain/documents").body(data, Charsets.UTF_8)
         }
