@@ -10,8 +10,6 @@ abstract class CommandManager {
 
     abstract fun setupEventHandlers()
 
-    abstract suspend fun registerSlash(vararg commands: SlashCommand)
-
-    abstract suspend fun registerMessage(vararg commands: MessageCommand)
+    abstract suspend fun registerCommands(sCommands: Array<SlashCommand>, mCommands: Array<MessageCommand>)
 
 }

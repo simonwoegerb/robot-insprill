@@ -50,7 +50,7 @@ class CustomCommand(
     }
 
     companion object {
-        fun buildCommandArray(config: BotConfig): Array<CustomCommand> {
+        fun buildCommandArray(config: BotConfig): Array<SlashCommand> {
             return config.commands.slash.custom.map {
                 CustomCommand(it.name, it.description, it)
             }.toTypedArray()

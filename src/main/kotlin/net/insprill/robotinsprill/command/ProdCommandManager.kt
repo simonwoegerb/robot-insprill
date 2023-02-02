@@ -19,23 +19,21 @@ class ProdCommandManager(private val robot: RobotInsprill) : CommandManager() {
         }
     }
 
-    override suspend fun registerSlash(vararg commands: SlashCommand) {
+    override suspend fun registerCommands(sCommands: Array<SlashCommand>, mCommands: Array<MessageCommand>) {
         robot.kord.createGlobalApplicationCommands {
-            commands.forEach { command ->
+            sCommands.forEach { command ->
                 input(command.name, command.description) { command.setup(this) }
                 slashCommands[command.name] = command
                 robot.logger.info("Registered slash command '${command.name}'")
             }
-        }.collect()
-    }
+            robot.logger.info("Registered ${sCommands.size} slash commands")
 
-    override suspend fun registerMessage(vararg commands: MessageCommand) {
-        robot.kord.createGlobalApplicationCommands {
-            commands.forEach { command ->
+            mCommands.forEach { command ->
                 message(command.name) { command.setup(this) }
                 messageCommands[command.name] = command
                 robot.logger.info("Registered message command '${command.name}'")
             }
+            robot.logger.info("Registered ${messageCommands.size} message commands")
         }.collect()
     }
 

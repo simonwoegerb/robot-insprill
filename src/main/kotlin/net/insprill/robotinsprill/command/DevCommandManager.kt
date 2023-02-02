@@ -20,25 +20,21 @@ class DevCommandManager(private val robot: RobotInsprill) : CommandManager() {
         }
     }
 
-    override suspend fun registerSlash(vararg commands: SlashCommand) {
+    override suspend fun registerCommands(sCommands: Array<SlashCommand>, mCommands: Array<MessageCommand>) {
         robot.kord.createGuildApplicationCommands(Snowflake(guildId!!)) {
-            commands.forEach { command ->
+            sCommands.forEach { command ->
                 val cmdName = "${command.name}-dev"
                 input(cmdName, command.description) { command.setup(this) }
                 slashCommands[cmdName] = command
-                robot.logger.info("Registered slash command '$cmdName'")
             }
-        }.collect()
-    }
+            robot.logger.info("Registered ${sCommands.size} slash commands")
 
-    override suspend fun registerMessage(vararg commands: MessageCommand) {
-        robot.kord.createGuildApplicationCommands(Snowflake(guildId!!)) {
-            commands.forEach { command ->
+            mCommands.forEach { command ->
                 val cmdName = "${command.name}-dev"
                 message(cmdName) { command.setup(this) }
                 messageCommands[cmdName] = command
-                robot.logger.info("Registered message command '$cmdName'")
             }
+            robot.logger.info("Registered ${messageCommands.size} message commands")
         }.collect()
     }
 
