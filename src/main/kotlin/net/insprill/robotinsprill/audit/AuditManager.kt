@@ -8,6 +8,7 @@ import dev.kord.rest.builder.message.EmbedBuilder
 import net.insprill.robotinsprill.RobotInsprill
 import net.insprill.robotinsprill.audit.category.AuditMembers
 import net.insprill.robotinsprill.audit.category.AuditMessages
+import net.insprill.robotinsprill.audit.category.AuditServer
 
 class AuditManager(private val robot: RobotInsprill) {
 
@@ -17,46 +18,70 @@ class AuditManager(private val robot: RobotInsprill) {
         arrayOf(
             AuditMembers(robot, this),
             AuditMessages(robot, this),
+            AuditServer(robot, this),
         ).forEach { it.registerEvents() }
     }
 
-    suspend fun sendMessage(
+    suspend fun sendUserMessage(
         guildId: Snowflake,
         user: User,
         color: AuditColor,
         title: String,
-        description: String? = null
+        description: String?
     ) {
-        val embed = buildEmbed(user, color, title, description)
+        if (!robot.config.audit.logBots && user.isBot) return
+        val embed = buildUserEmbed(user, color, title, description)
+        sendMessage(guildId, embed)
+    }
+
+    suspend fun sendServerMessage(
+        guildId: Snowflake,
+        color: AuditColor,
+        title: String,
+        footer: String?,
+    ) {
+        val embed = buildServerEmbed(color, title, footer)
+        sendMessage(guildId, embed)
+    }
+
+    private suspend fun sendMessage(guildId: Snowflake, embed: EmbedBuilder.() -> Unit) {
         if (channelCache.contains(guildId.value)) {
             channelCache[guildId.value]?.createEmbed(embed)
         } else {
             val channel = robot.kord.getGuildOrThrow(guildId)
-                .getChannel(Snowflake(robot.config.audit.channelIds[guildId.value]!!)) as MessageChannel
+                .getChannel(Snowflake(robot.config.audit.auditChannels[guildId.value]!!)) as MessageChannel
             channelCache[guildId.value] = channel
             channel.createEmbed(embed)
         }
     }
 
-    private fun buildEmbed(
+    private fun buildUserEmbed(
         user: User,
         color: AuditColor,
         title: String,
-        description: String? = null
+        description: String?
     ): EmbedBuilder.() -> Unit {
+        val footer = "User ID: ${user.id.value} • <t:${System.currentTimeMillis() / 1000}:f>"
         return {
             author {
                 name = user.tag
                 icon = user.avatar?.url
             }
             this.color = color.color
-            this.description = """
-                **$title**
+            this.description = "**$title**\n\n${if (description != null) "$description\n\n" else ""}$footer"
 
-                $description
+        }
+    }
 
-                User ID: ${user.id.value} • <t:${System.currentTimeMillis() / 1000}:f>
-            """.trim()
+    private fun buildServerEmbed(
+        color: AuditColor,
+        title: String,
+        footer: String?,
+    ): EmbedBuilder.() -> Unit {
+        val finalFooter = "${if (footer != null) "$footer • " else ""}<t:${System.currentTimeMillis() / 1000}:f>"
+        return {
+            this.color = color.color
+            this.description = "**$title**\n\n$finalFooter"
         }
     }
 

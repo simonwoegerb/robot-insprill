@@ -56,17 +56,21 @@ data class BotConfig(val commands: Commands, val codebin: Bin, val audit: Audit)
 
     data class Bin(val services: Map<BinService, List<String>>)
 
-    data class Audit(val channelIds: Map<ULong, ULong>, val events: Events) {
-        data class Events(val members: Members, val messages: Messages) {
+    data class Audit(val auditChannels: Map<ULong, ULong>, val ignoreChannels: Map<ULong, ULong>, val logBots: Boolean, val events: Events) {
+        data class Events(val members: Members, val messages: Messages, val server: Server) {
             data class Members(
                 val banned: Boolean,
                 val unbanned: Boolean,
                 val joined: Boolean,
                 val left: Boolean,
-                val updated: Boolean
+                val voice: Boolean,
             )
 
-            data class Messages(val deleted: Boolean, val edited: Boolean)
+            data class Messages(val deleted: Boolean, val edited: Boolean, val invitePosted: Boolean)
+            data class Server(val role: Role, val channel: Channel) {
+                data class Role(val created: Boolean, val deleted: Boolean)
+                data class Channel(val created: Boolean, val deleted: Boolean)
+            }
         }
     }
 

@@ -287,9 +287,12 @@ codebin:
       - pastebin.com
 
 audit:
-  channel-ids:
+  audit-channels:
     365315337240969226: 699125029580832851
     709740759552884788: 793644931943497809
+  ignore-channels:
+    365315337240969226: 692793636429103228
+  log-bots: false
   events:
     members:
       banned: true
@@ -297,6 +300,15 @@ audit:
       joined: true
       left: true
       updated: true
+      voice: true
     messages:
       deleted: true
       edited: true
+      invite-posted: true
+    server:
+      role:
+        created: true
+        deleted: true
+      channel:
+        created: true
+        deleted: true

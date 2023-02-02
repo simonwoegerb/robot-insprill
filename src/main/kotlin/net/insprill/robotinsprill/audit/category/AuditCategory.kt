@@ -21,7 +21,15 @@ sealed class AuditCategory(val robot: RobotInsprill, private val audit: AuditMan
             robot.logger.debug { "Tried to send audit message with no user." }
             return
         }
-        audit.sendMessage(guildId, user, color, title, description)
+        audit.sendUserMessage(guildId, user, color, title, description)
+    }
+
+    suspend fun send(guildId: Snowflake?, color: AuditColor, title: String, footer: String? = null) {
+        if (guildId == null) {
+            robot.logger.debug { "Tried to send audit message with no guildId." }
+            return
+        }
+        audit.sendServerMessage(guildId, color, title, footer)
     }
 
     inline fun <reified T : Event> event(
