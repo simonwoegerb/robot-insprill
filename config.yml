@@ -1,7 +1,4 @@
 commands:
-  message:
-    binfiles:
-      codebin: LUCKO_PASTE
   slash:
     custom:
       - name: added
@@ -274,6 +271,7 @@ commands:
         message: https://xyproblem.info/
 
 codebin:
+  upload: LUCKO_PASTE
   services:
     HASTEBIN_LEGACY:
       - paste.md-5.net

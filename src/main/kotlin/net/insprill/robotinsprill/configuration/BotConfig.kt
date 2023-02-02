@@ -6,11 +6,7 @@ import kotlinx.datetime.Instant
 import net.insprill.robotinsprill.codebin.BinService
 
 data class BotConfig(val commands: Commands, val codebin: Bin, val audit: Audit) {
-    data class Commands(val message: Message, val slash: Slash) {
-        data class Message(val binfiles: BinFiles) {
-            data class BinFiles(val codebin: BinService)
-        }
-
+    data class Commands(val slash: Slash) {
         data class Slash(val custom: List<CustomCommand>) {
             data class CustomCommand(
                 val name: String,
@@ -54,7 +50,7 @@ data class BotConfig(val commands: Commands, val codebin: Bin, val audit: Audit)
         }
     }
 
-    data class Bin(val services: Map<BinService, List<String>>)
+    data class Bin(val upload: BinService, val services: Map<BinService, List<String>>)
 
     data class Audit(val auditChannels: Map<ULong, ULong>, val ignoreChannels: Map<ULong, ULong>, val logBots: Boolean, val events: Events) {
         data class Events(val members: Members, val messages: Messages, val server: Server) {
@@ -75,7 +71,7 @@ data class BotConfig(val commands: Commands, val codebin: Bin, val audit: Audit)
     }
 
     fun validate(): String? {
-        if (commands.message.binfiles.codebin == BinService.PASTEBIN && System.getenv("PASTEBIN_KEY") == null) {
+        if (codebin.upload == BinService.PASTEBIN && System.getenv("PASTEBIN_KEY") == null) {
             return "The PASTEBIN_KEY environment variable must be set to do uploads to pastebin!"
         }
         return null

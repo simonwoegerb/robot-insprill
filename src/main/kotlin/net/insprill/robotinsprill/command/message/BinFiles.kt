@@ -27,7 +27,7 @@ class BinFiles(private val robot: RobotInsprill) : MessageCommand() {
         val bins: MutableMap<String, String> = HashMap()
         context.interaction.getTarget().attachments.forEach { attachment ->
             bins[attachment.filename] = attachment.stringContent().fold({ content ->
-                robot.config.commands.message.binfiles.codebin.uploadBin(robot.config, content)
+                robot.config.codebin.upload.uploadBin(robot.config, content)
                     .fold({ url -> url }, { err ->
                         robot.logger.error(err)
                         err.message ?: "An error occurred 1"
