@@ -1,11 +1,18 @@
 package net.insprill.robotinsprill.configuration
 
 import dev.kord.common.Color
+import dev.kord.common.entity.Snowflake
 import dev.kord.rest.builder.message.EmbedBuilder
 import kotlinx.datetime.Instant
 import net.insprill.robotinsprill.codebin.BinService
+import net.insprill.robotinsprill.statistic.Statistic
 
-data class BotConfig(val commands: Commands, val codebin: Bin, val audit: Audit) {
+data class BotConfig(
+    val commands: Commands,
+    val codebin: Bin,
+    val audit: Audit,
+    val statisticChannels: List<StatisticChannel>
+) {
     data class Commands(val slash: Slash) {
         data class Slash(val custom: List<CustomCommand>) {
             data class CustomCommand(
@@ -52,7 +59,12 @@ data class BotConfig(val commands: Commands, val codebin: Bin, val audit: Audit)
 
     data class Bin(val upload: BinService, val services: Map<BinService, List<String>>)
 
-    data class Audit(val auditChannels: Map<ULong, ULong>, val ignoreChannels: Map<ULong, ULong>, val logBots: Boolean, val events: Events) {
+    data class Audit(
+        val auditChannels: Map<Snowflake, Snowflake>,
+        val ignoreChannels: Map<Snowflake, Snowflake>,
+        val logBots: Boolean,
+        val events: Events
+    ) {
         data class Events(val members: Members, val messages: Messages, val server: Server) {
             data class Members(
                 val banned: Boolean,
@@ -69,6 +81,13 @@ data class BotConfig(val commands: Commands, val codebin: Bin, val audit: Audit)
             }
         }
     }
+
+    data class StatisticChannel(
+        val channelId: Pair<Snowflake, Snowflake>,
+        val format: String,
+        val statistic: Statistic,
+        val data: String?
+    )
 
     fun validate(): String? {
         if (codebin.upload == BinService.PASTEBIN && System.getenv("PASTEBIN_KEY") == null) {

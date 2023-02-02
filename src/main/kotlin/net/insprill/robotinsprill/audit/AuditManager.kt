@@ -12,7 +12,7 @@ import net.insprill.robotinsprill.audit.category.AuditServer
 
 class AuditManager(private val robot: RobotInsprill) {
 
-    private val channelCache: MutableMap<ULong, MessageChannel> = HashMap()
+    private val channelCache: MutableMap<Snowflake, MessageChannel> = HashMap()
 
     fun setupEventHandlers() {
         arrayOf(
@@ -45,14 +45,10 @@ class AuditManager(private val robot: RobotInsprill) {
     }
 
     private suspend fun sendMessage(guildId: Snowflake, embed: EmbedBuilder.() -> Unit) {
-        if (channelCache.contains(guildId.value)) {
-            channelCache[guildId.value]?.createEmbed(embed)
-        } else {
-            val channel = robot.kord.getGuildOrThrow(guildId)
-                .getChannel(Snowflake(robot.config.audit.auditChannels[guildId.value]!!)) as MessageChannel
-            channelCache[guildId.value] = channel
-            channel.createEmbed(embed)
-        }
+        channelCache.getOrPut(guildId) {
+            robot.kord.getGuildOrThrow(guildId)
+                .getChannel(robot.config.audit.auditChannels[guildId]!!) as MessageChannel
+        }.createEmbed(embed)
     }
 
     private fun buildUserEmbed(

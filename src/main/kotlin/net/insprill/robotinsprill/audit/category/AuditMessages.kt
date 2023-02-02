@@ -13,7 +13,7 @@ class AuditMessages(robot: RobotInsprill, audit: AuditManager) : AuditCategory(r
     override fun registerEvents() {
         val config = robot.config.audit.events.messages
         fun isIgnored(id: Snowflake): Boolean {
-            return robot.config.audit.ignoreChannels.values.contains(id.value)
+            return robot.config.audit.ignoreChannels.values.contains(id)
         }
         event<MessageDeleteEvent>(config.deleted) {
             if (isIgnored(channelId)) return@event

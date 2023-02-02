@@ -4,6 +4,8 @@ import com.sksamuel.hoplite.ConfigLoaderBuilder
 import com.sksamuel.hoplite.addFileSource
 import com.sksamuel.hoplite.fp.getOrElse
 import dev.kord.core.Kord
+import dev.kord.core.event.gateway.ReadyEvent
+import dev.kord.core.on
 import dev.kord.core.supplier.EntitySupplyStrategy
 import dev.kord.gateway.Intent
 import dev.kord.gateway.PrivilegedIntent
@@ -20,6 +22,7 @@ import net.insprill.robotinsprill.command.message.BinFiles
 import net.insprill.robotinsprill.command.message.Google
 import net.insprill.robotinsprill.command.slash.CustomCommand
 import net.insprill.robotinsprill.configuration.BotConfig
+import net.insprill.robotinsprill.statistic.StatisticManager
 
 suspend fun main() {
     val logger = KotlinLogging.logger("Robot Insprill")
@@ -32,6 +35,7 @@ suspend fun main() {
     RobotInsprill(logger, kord)
         .registerCommands()
         .registerAuditEvents()
+        .registerLoginEvents()
         .login()
 }
 
@@ -83,12 +87,18 @@ class RobotInsprill(val logger: KLogger, val kord: Kord) {
         AuditManager(this).setupEventHandlers()
     }
 
+    suspend fun registerLoginEvents() = apply {
+        kord.on<ReadyEvent> {
+            StatisticManager(this@RobotInsprill).start(3600 * 1000)
+            logger.info("Logged into {}", kord.getSelf().tag)
+        }
+    }
+
     suspend fun login() {
         logger.info("Logging in")
         kord.login {
             @OptIn(PrivilegedIntent::class)
             intents += Intent.MessageContent
-            logger.info("Logged into {}", kord.getSelf().tag)
         }
     }
 

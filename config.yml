@@ -270,6 +270,12 @@ commands:
         description: Ask about your actual problem, not your attempted solution.
         message: https://xyproblem.info/
 
+statistic-channels:
+  - channel-id: [ 365315337240969226, 821976647863238696 ]
+    format: "CodedRed Subs: %s"
+    statistic: YOUTUBE_SUBS
+    data: UC_kPUW3XPrCCRT9a4Pnf1Tg
+
 codebin:
   upload: LUCKO_PASTE
   services:
