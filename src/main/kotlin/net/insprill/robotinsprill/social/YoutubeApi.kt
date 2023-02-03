@@ -7,6 +7,7 @@ import com.github.kittinunf.fuel.serialization.kotlinxDeserializerOf
 import com.github.kittinunf.result.Result
 import java.net.URLEncoder
 import kotlinx.serialization.Serializable
+import kotlinx.serialization.json.Json
 
 object YoutubeApi {
 
@@ -14,7 +15,7 @@ object YoutubeApi {
         val encodedChannelId = URLEncoder.encode(channelId, Charsets.UTF_8)
         val encodedApiKey = URLEncoder.encode(System.getenv("YOUTUBE_API_KEY"), Charsets.UTF_8)
         return Fuel.get("https://www.googleapis.com/youtube/v3/channels?part=statistics&id=$encodedChannelId&key=$encodedApiKey")
-            .awaitObjectResponseResult<Channels>(kotlinxDeserializerOf()).third
+            .awaitObjectResponseResult<Channels>(kotlinxDeserializerOf(Json { ignoreUnknownKeys = true })).third
     }
 
     @Serializable
