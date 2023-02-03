@@ -21,11 +21,11 @@ commands:
           A multi-line message
           sent a plain text.
 
-statistic-channels:
-  - channel-id: 1070824774009368636
-    format: "Train People: %s"
-    statistic: YOUTUBE_SUBS
-    data: UCHUb_Wty4v2ddZqbxdqOmxA
+statistic-channels: [ ]
+#  - channel-id: 1070824774009368636
+#    format: "Train People: %s"
+#    statistic: YOUTUBE_SUBS
+#    data: UCHUb_Wty4v2ddZqbxdqOmxA
 
 codebin:
   upload: LUCKO_PASTE
@@ -43,7 +43,7 @@ codebin:
 
 audit:
   audit-channel: 793644931943497809
-  ignore-channels: []
+  ignore-channels: [ ]
   log-bots: false
   events:
     members:
