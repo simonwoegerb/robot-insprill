@@ -6,7 +6,7 @@ All packages referenced are under the root `net.insprill.robotinsprill` package.
 For more information on Kord, check out their [Wiki](https://github.com/kordlib/kord/wiki)
 and [Dokka](https://kordlib.github.io/kord/) docs.
 
-Use the table of contents 
+Use the table of contents
 
 ## Adding Commands
 
@@ -182,6 +182,21 @@ In addition to this, we have implemented decoders for the following classes:
 If you want to add a decoder for a new class, you can create it in the `hoplite.decoder` package.
 The classes there should provide you with a good template for simple classes.
 Once it's created, add it to the file `src/resources/META-INF/services/com.sksamuel.hoplite.decoder.Decoder`.
+
+### Responses
+
+Responding to interactions with a text message or embed is fairly common, so there's an easy way to handle it.
+
+The BotConfig has a subclass called `Message`, that can have `text` and multiple `embeds`.
+This can easily be integrated into an interaction response like the following
+
+```kotlin
+val message: BotConfig.Message = ...
+context.interaction.respondPublic {
+    content = message.text
+    message.embeds()?.let { embeds.addAll(it) }
+}
+```
 
 ## Statistics
 

@@ -5,272 +5,295 @@ commands:
     custom:
       - name: added
         description: Show Patrons how to access the GitHub
-        message: |-
-          <:peepoHeart:814047012395679754> __**Thank you very much!**__
+        response:
+          text: |-
+            <:peepoHeart:814047012395679754> __**Thank you very much!**__
 
-          *You have been added to a Team.*
+            *You have been added to a Team.*
 
-          To accept the invite to CodedRed's organization go here: <https://github.com/CodedRedYT>
-          Once there you will be able to view the repositories that your team has access to!
-          Thank you again for supporting! <:mcheart:814047709102997594>
+            To accept the invite to CodedRed's organization go here: <https://github.com/CodedRedYT>
+            Once there you will be able to view the repositories that your team has access to!
+            Thank you again for supporting! <:mcheart:814047709102997594>
       - name: beginner
         description: Show beginners some information to help get started programming
-        embed:
-          title: New to Java or programming in general?
-          description: |-
-            You should probably watch **[this video](https://youtu.be/eIrMbAQSU34)**. It goes over the very basics of Java such as how methods work, different data types, how loops work, and a bunch of other stuff.
+        response:
+          embeds:
+            - title: New to Java or programming in general?
+              description: |-
+                You should probably watch **[this video](https://youtu.be/eIrMbAQSU34)**. It goes over the very basics of Java such as how methods work, different data types, how loops work, and a bunch of other stuff.
 
-            If you want to learn more, you can watch **[this video](https://youtu.be/xk4_1vDrzzo)** which also goes over the very basics, but also covers other stuff such as different modifiers, interfaces, encapsulation, and towards the end even creating a basic GUI application with Swing!
+                If you want to learn more, you can watch **[this video](https://youtu.be/xk4_1vDrzzo)** which also goes over the very basics, but also covers other stuff such as different modifiers, interfaces, encapsulation, and towards the end even creating a basic GUI application with Swing!
       - name: coding
         description: Show people where to ask for programming help
-        embed:
-          title: Need help coding something?
-          description: Create a post in the <#1027121783792480296> forum!
+        response:
+          embeds:
+            - title: Need help coding something?
+              description: Create a post in the <#1027121783792480296> forum!
       - name: constructor
         description: Show how Java constructors work and can be used
-        embed:
-          title: How Java Constructors work
-          author:
-            name: By BingoRufus
-            icon: https://cdn.discordapp.com/avatars/135545556876394497/dd9b9015a1fcdf5b01fc70f9cdd93902.webp
-          description: |-
-            A constructor in Java is a special method that is used to initialize objects. The constructor is called when an object of a class is created. It can be used to set initial values for object attributes. The main way we use constructors in Spigot plugins is to allow classes to reference the Main class.
+        response:
+          embeds:
+            - title: How Java Constructors work
+              author:
+                name: By BingoRufus
+                icon: https://cdn.discordapp.com/avatars/135545556876394497/dd9b9015a1fcdf5b01fc70f9cdd93902.webp
+              description: |-
+                A constructor in Java is a special method that is used to initialize objects. The constructor is called when an object of a class is created. It can be used to set initial values for object attributes. The main way we use constructors in Spigot plugins is to allow classes to reference the Main class.
 
-            We’ll start out with our main class titled Main and another class titled TutorialClass.
+                We’ll start out with our main class titled Main and another class titled TutorialClass.
 
-            The format for constructors is:
-            `public ClassName(args)`
+                The format for constructors is:
+                `public ClassName(args)`
 
-            In this case, it would look like this:
-            `public TutorialClass(Main m) {`
-            The argument being the main class. Now, whenever a TutorialClass is created it will require a Main class.
+                In this case, it would look like this:
+                `public TutorialClass(Main m) {`
+                The argument being the main class. Now, whenever a TutorialClass is created it will require a Main class.
 
-            So our code for the TutorialClass will look like this
-            ```java
-            public class TutorialClass {
+                So our code for the TutorialClass will look like this
+                ```java
+                public class TutorialClass {
 
-                private Main main;
+                    private Main main;
 
-                public TutorialClass(Main main) {
-                    this.main = main;
-                }
+                    public TutorialClass(Main main) {
+                        this.main = main;
+                    }
 
-            }```
-            And when creating the TutorialClass we now only need to do `new TutorialClass(this);`
+                }```
+                And when creating the TutorialClass we now only need to do `new TutorialClass(this);`
 
-            This will eliminate the need for static variables and is overall good practice.
+                This will eliminate the need for static variables and is overall good practice.
       - name: crp
         description: Point users of CodedRed's Spigot plugins to the CRP Discord Server
-        message: |-
-          **Need help with one of CodedRed's Spigot plugins?**
-          Join the new Discord Server!
+        response:
+          text: |-
+            **Need help with one of CodedRed's Spigot plugins?**
+            Join the new Discord Server!
 
-          https://discord.gg/7A9UA2n
+            https://discord.gg/7A9UA2n
 
-          > Note: Currently you will not receive active support, however, there is an FAQ channel that should answer most if not all of your questions. If you still need help, ask in <#1028938627486601267> and someone from the community may try to help you.
+            > Note: Currently you will not receive active support, however, there is an FAQ channel that should answer most if not all of your questions. If you still need help, ask in <#1028938627486601267> and someone from the community may try to help you.
       - name: debug
         description: Show users how to debug code
-        embed:
-          author:
-            name: By BingoRufus
-            icon: https://cdn.discordapp.com/avatars/135545556876394497/dd9b9015a1fcdf5b01fc70f9cdd93902.webp
-          description: |-
-            How to debug code
-            ```md
-            1. Establish your goal.
-            # To fix your problem it is first important that you know what you want to do.```
-            ```md
-            2. Identify the problem.
-            # This is often the hardest step. But it is the most important. "My plugin isn't working" is not a problem. "My plugin isn't loading" or "My listener isn't working" is a good example of a problem. ```
-            ```md
-            3. Isolate the problem.
-            # Once you have identified the problem, it is important to locate what is causing it. Having an exception that prints a stacktrace to the console is probably the easiest way to find out the problem. Whenever you have a bug, make sure to check console for any errors. See the bottom for more info.```
-            ```md
-            4. Fix the problem
-            # Once you have identified the problem, and tracked the origin of it, that is when you should begin to fix it. If you can't think of a fix, don't be afraid to ask the discord or google.```
-            ```md
-            5. Test it.
-            # Whenever you edit your code, test it, and if there's still an issue, go through steps 1-5 again```
+        response:
+          embeds:
+            - author:
+                name: By BingoRufus
+                icon: https://cdn.discordapp.com/avatars/135545556876394497/dd9b9015a1fcdf5b01fc70f9cdd93902.webp
+              description: |-
+                How to debug code
+                ```md
+                1. Establish your goal.
+                # To fix your problem it is first important that you know what you want to do.```
+                ```md
+                2. Identify the problem.
+                # This is often the hardest step. But it is the most important. "My plugin isn't working" is not a problem. "My plugin isn't loading" or "My listener isn't working" is a good example of a problem. ```
+                ```md
+                3. Isolate the problem.
+                # Once you have identified the problem, it is important to locate what is causing it. Having an exception that prints a stacktrace to the console is probably the easiest way to find out the problem. Whenever you have a bug, make sure to check console for any errors. See the bottom for more info.```
+                ```md
+                4. Fix the problem
+                # Once you have identified the problem, and tracked the origin of it, that is when you should begin to fix it. If you can't think of a fix, don't be afraid to ask the discord or google.```
+                ```md
+                5. Test it.
+                # Whenever you edit your code, test it, and if there's still an issue, go through steps 1-5 again```
 
-            **Whenever you get help or give help to someone you may notice that all 5 of these things are required to fix the problem. If you're asking for help, try to go through steps one and 2 so that you can get better help.**
+                **Whenever you get help or give help to someone you may notice that all 5 of these things are required to fix the problem. If you're asking for help, try to go through steps one and 2 so that you can get better help.**
 
 
-            Below is an example of going through the process, (The code could be optimized quite a bit, but I'll stick to this so it is easier to understand for more people)
+                Below is an example of going through the process, (The code could be optimized quite a bit, but I'll stick to this so it is easier to understand for more people)
 
-            <https://pastebin.com/19Hj5nUr>
-            ```md
-            1. I want to make a command that will send a message to the player containing all of the arguments. For example "/tellme this is a test command" will send the player a message of "this is a test command"```
-            ```md
-            2. When I run the command nothing happens.```
+                <https://pastebin.com/19Hj5nUr>
+                ```md
+                1. I want to make a command that will send a message to the player containing all of the arguments. For example "/tellme this is a test command" will send the player a message of "this is a test command"```
+                ```md
+                2. When I run the command nothing happens.```
 
-            Now that we know what we're trying to do, and we know what is happening, we need to identify the problem. The first step would be to look in console for a stack trace. If there isn't a stack trace, that's when we start using the most important method in Java; System.out.println(); We can modify our onCommand method to include these debug messages like so:
-            <https://pastebin.com/Whj3C9dc>
+                Now that we know what we're trying to do, and we know what is happening, we need to identify the problem. The first step would be to look in console for a stack trace. If there isn't a stack trace, that's when we start using the most important method in Java; System.out.println(); We can modify our onCommand method to include these debug messages like so:
+                <https://pastebin.com/Whj3C9dc>
 
-            If we run this and type the command /tellme test We would see this in the console.
-            ```Command sent
-            tellme
-            false```
+                If we run this and type the command /tellme test We would see this in the console.
+                ```Command sent
+                tellme
+                false```
 
-            That means that the if statement on line 5 is false.
+                That means that the if statement on line 5 is false.
 
-            ```md
-            3. label.equalsIgnoreCase("telme") is false```
-            Now looking at what we're comparing, the label for the command being run is tellme and we are comparing it to telme. This problem is caused just by a typo.
-            ```md
-            4. Replace  "if (label.equalsIgnoreCase("telme"))" with "if (label.equalsIgnoreCase("tellme"))"```
-            ```md
-            5. "/tellme test message" sends a message of "An internal error occured while attempting to perform this command"```
-            Now we go through steps 1-5 again.
-            If we go look at the console we will see an error that would look something like <https://pastebin.com/4byGYQhwWhen> looking at the log we can see the issue is caused on line 9 of the main class.
-            We can fix it by replacing the <= with < in the for loop. For more info on reading debug logs you can visit <https://www.spigotmc.org/wiki/fixing-plugin-problems-easily-reading-stacktraces/>
+                ```md
+                3. label.equalsIgnoreCase("telme") is false```
+                Now looking at what we're comparing, the label for the command being run is tellme and we are comparing it to telme. This problem is caused just by a typo.
+                ```md
+                4. Replace  "if (label.equalsIgnoreCase("telme"))" with "if (label.equalsIgnoreCase("tellme"))"```
+                ```md
+                5. "/tellme test message" sends a message of "An internal error occured while attempting to perform this command"```
+                Now we go through steps 1-5 again.
+                If we go look at the console we will see an error that would look something like <https://pastebin.com/4byGYQhwWhen> looking at the log we can see the issue is caused on line 9 of the main class.
+                We can fix it by replacing the <= with < in the for loop. For more info on reading debug logs you can visit <https://www.spigotmc.org/wiki/fixing-plugin-problems-easily-reading-stacktraces/>
 
-            If you're ever stuck, visit <https://bit.ly/howtodebug>
+                If you're ever stuck, visit <https://bit.ly/howtodebug>
       - name: designer
         description: Are you a graphic designer?
-        message: |-
-          CodedRed is currently looking for graphic designers!
-          If you're interested, private message CodedRed#0900.
+        response:
+          text: |-
+            CodedRed is currently looking for graphic designers!
+            If you're interested, private message CodedRed#0900.
       - name: dontasktoask
         description: Don't ask to ask, just ask.
-        message: https://dontasktoask.com/
+        response:
+          text: https://dontasktoask.com/
       - name: ep1
         description: Show a link to the start of the Spigot plugin series
-        message: |-
-          Check out how to code Spigot plugins here!
-          https://youtu.be/r4W4drYdb4Q
+        response:
+          text: |-
+            Check out how to code Spigot plugins here!
+            https://youtu.be/r4W4drYdb4Q
       - name: eta
         description: How long?
-        message: About a day. Give or take a few years
+        response:
+          text: About a day. Give or take a few years
       - name: google
         description: Google it
-        message: https://tenor.com/view/levar-burton-reading-rainbow-google-that-shit-google-gif-15062945
+        response:
+          text: https://tenor.com/view/levar-burton-reading-rainbow-google-that-shit-google-gif-15062945
       - name: halp
         description: Halp!1!!!111!1
-        message: https://imgur.com/2STmzue.png
+        response:
+          text: https://imgur.com/2STmzue.png
       - name: hashmap
         description: Explains how HashMaps work
-        embed:
-          author:
-            name: CodedRed
-            url: https://cdn.discordapp.com/avatars/295610305734639617/2d86aa877e45196f255528cf423fcf2a.webp
-          description: |-
-            How HashMaps work in Java
-            ```java
-            Map<Key, Value> example = new HashMap<>();```
-            HashMaps have two things a key and a value. You call the key and get the value it is holding.
-            key -- > value
+        response:
+          embeds:
+            - author:
+                name: CodedRed
+                url: https://cdn.discordapp.com/avatars/295610305734639617/2d86aa877e45196f255528cf423fcf2a.webp
+              description: |-
+                How HashMaps work in Java
+                ```java
+                Map<Key, Value> example = new HashMap<>();```
+                HashMaps have two things a key and a value. You call the key and get the value it is holding.
+                key -- > value
 
-            ```java
-            Map<String, Integer> playersBalance = new HashMap<>();```
+                ```java
+                Map<String, Integer> playersBalance = new HashMap<>();```
 
-            The hashmap above is a <String, Integer> meaning it will hold a string that corresponds to a certain Integer.
-            For example lets store player's balances in this hashmap. To do this you can do the following code:
-            ```java
-            playerBalance.put("CodedRed", 10000);
-            playerBalance.put("Insprill", 5003);
-            playerBalance.put("danc", 4665);
-            playerBalance.put("Deerjump", 3761);
-            ```
-            You can store as many different pairs of information you want in a hashmap. However, if you try to put value in with the same key name then it will overwrite the old key. Hence, you cannot have the same key names.
+                The hashmap above is a <String, Integer> meaning it will hold a string that corresponds to a certain Integer.
+                For example lets store player's balances in this hashmap. To do this you can do the following code:
+                ```java
+                playerBalance.put("CodedRed", 10000);
+                playerBalance.put("Insprill", 5003);
+                playerBalance.put("danc", 4665);
+                playerBalance.put("Deerjump", 3761);
+                ```
+                You can store as many different pairs of information you want in a hashmap. However, if you try to put value in with the same key name then it will overwrite the old key. Hence, you cannot have the same key names.
 
-            key returns the value so...
-            Our info in the hashmap look like this:
-            `CodedRed --> 10000`
-            `Insprill --> 5003`
-            `danc --> 4665`
-            `Deerjump --> 3761`
+                key returns the value so...
+                Our info in the hashmap look like this:
+                `CodedRed --> 10000`
+                `Insprill --> 5003`
+                `danc --> 4665`
+                `Deerjump --> 3761`
 
-            Say we wanted to get someone's balance:
-            ```java
-            if (playerBalance.containsKey("CodedRed"))
-            int money = playerBalance.get("CodedRed");```
-            If you try to get a value with a key that doesn't exist, it will simply return `null`.
+                Say we wanted to get someone's balance:
+                ```java
+                if (playerBalance.containsKey("CodedRed"))
+                int money = playerBalance.get("CodedRed");```
+                If you try to get a value with a key that doesn't exist, it will simply return `null`.
       - name: listeners
         description: How Spigot Listeners work
-        embed:
-          description: |-
-            __**Basic Listener Help**__
+        response:
+          embeds:
+            - description: |-
+                __**Basic Listener Help**__
 
-            Listeners are required when you are dealing with events!
-            They are handled in different ways depending on if you are working on an event in your *Main class* or *another separate class*!
+                Listeners are required when you are dealing with events!
+                They are handled in different ways depending on if you are working on an event in your *Main class* or *another separate class*!
 
-            **First Step**
-            First make sure to have `implements Listener` at the top of the class which has your event. Example:
-            ```java
-            public class MyClass implements Listener {
-            ```
+                **First Step**
+                First make sure to have `implements Listener` at the top of the class which has your event. Example:
+                ```java
+                public class MyClass implements Listener {
+                ```
 
-            **Second Step**
-            Register the event!
-            In your onEnable you must register the event. To do so you must call upon the classes constructor.
-            __*Registering an event that is in your main class:*__
-            ```java
-            public void onEnable() {
-                this.getServer().getPluginManager().registerEvents(this, this);
-            }
-            ```
-            __*Registering an event that is in a separate class:*__
-            ```java
-            public void onEnable() {
-                this.getServer().getPluginManager().registerEvents(new MyClass(), this);
-            }
-            ```
-            In this example "MyClass()" is the name of the java class that has my event.
+                **Second Step**
+                Register the event!
+                In your onEnable you must register the event. To do so you must call upon the classes constructor.
+                __*Registering an event that is in your main class:*__
+                ```java
+                public void onEnable() {
+                    this.getServer().getPluginManager().registerEvents(this, this);
+                }
+                ```
+                __*Registering an event that is in a separate class:*__
+                ```java
+                public void onEnable() {
+                    this.getServer().getPluginManager().registerEvents(new MyClass(), this);
+                }
+                ```
+                In this example "MyClass()" is the name of the java class that has my event.
 
-            **Third Step**
-            Make sure to have `@EventHandler` above the event method! Example:
-            ```java
-            @EventHandler
-            public void onClick(PlayerInteractEvent event) {
+                **Third Step**
+                Make sure to have `@EventHandler` above the event method! Example:
+                ```java
+                @EventHandler
+                public void onClick(PlayerInteractEvent event) {
 
-            }
-            ```
-            **Hope this helped!**
+                }
+                ```
+                **Hope this helped!**
       - name: logs
         description: Show the looooogs
-        message: In your server folder, open the folder called `logs`, in that folder there should be a file called `latest` or `latest.log`. Please drag that file into Discord and send it :)
+        response:
+          text: In your server folder, open the folder called `logs`, in that folder there should be a file called `latest` or `latest.log`. Please drag that file into Discord and send it :)
       - name: naming
         description: Show the proper Java naming conventions
-        embed:
-          title: Java naming conventions
-          url: https://www.geeksforgeeks.org/java-naming-conventions
+        response:
+          embeds:
+            - title: Java naming conventions
+              url: https://www.geeksforgeeks.org/java-naming-conventions
       - name: paste
         description: Show how to paste code
-        message: |-
-          **Please post small amounts of code in blocks like this:**
-          > \```java
-          > *INSERT CODE HERE*
-          > \```
-          There should be no space/line between the language and the first backtick (`), not to be confused with a single quote (').
+        response:
+          text: |-
+            **Please post small amounts of code in blocks like this:**
+            > \```java
+            > *INSERT CODE HERE*
+            > \```
+            There should be no space/line between the language and the first backtick (`), not to be confused with a single quote (').
 
-          *If the code is longer than ~24 lines, please use a bin like **<https://paste.insprill.net/>**!*
+            *If the code is longer than ~24 lines, please use a bin like **<https://paste.insprill.net/>**!*
       - name: singleton
         description: How to use a basic singleton
-        message: |-
-          ```java
-          private static ClassName instance = new ClassName();
+        response:
+          text: |-
+            ```java
+            private static ClassName instance = new ClassName();
 
-          public static ClassName getInstance() {
-              return instance;
-          }```
-          Non-static methods and variables in this class can then be accessed with `ClassName.getInstance()...`.
-          If you want to use this in your main class, then remove the ` = new ClassName()` part and put `instance = this;` in your `onLoad` or `onEnable`.
-          Note that this isn't best practice and you should use dependency injection. Run `/constructor` to view examples.
+            public static ClassName getInstance() {
+                return instance;
+            }```
+            Non-static methods and variables in this class can then be accessed with `ClassName.getInstance()...`.
+            If you want to use this in your main class, then remove the ` = new ClassName()` part and put `instance = this;` in your `onLoad` or `onEnable`.
+            Note that this isn't best practice and you should use dependency injection. Run `/constructor` to view examples.
       - name: spigotseries
         description: Link the Spigot plugin tutorial playlist
-        message: https://www.youtube.com/playlist?list=PL65-DKRLvp3Yn7iglPfxKoc7bl0N80XgG
+        response:
+          text: https://www.youtube.com/playlist?list=PL65-DKRLvp3Yn7iglPfxKoc7bl0N80XgG
       - name: switch
         description: Switches be switchin
-        message: https://imgur.com/DINBey1.png
+        response:
+          text: https://imgur.com/DINBey1.png
       - name: tryandsee
         description: Try it. See what happens.
-        message: https://tryitands.ee/
+        response:
+          text: https://tryitands.ee/
       - name: udontthink
         description: Your problem is that you don't think!
-        message: https://imgur.com/CTZOlnQ.png
+        response:
+          text: https://imgur.com/CTZOlnQ.png
       - name: xy
         description: Ask about your actual problem, not your attempted solution.
-        message: https://xyproblem.info/
+        response:
+          text: https://xyproblem.info/
 
 statistic-channels:
   - channel-id: 821976647863238696

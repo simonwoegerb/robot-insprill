@@ -20,41 +20,8 @@ data class BotConfig(
                 val name: String,
                 val description: String,
                 val private: Boolean = false,
-                val message: String?,
-                val embed: CustomCommandEmbed?
-            ) {
-                data class CustomCommandEmbed(
-                    val title: String?,
-                    val description: String?,
-                    var url: String?,
-                    var timestamp: Instant?,
-                    var color: Color?,
-                    var image: String?,
-                    var footer: EmbedFooter?,
-                    var thumbnail: String?,
-                    var author: EmbedAuthor?,
-//                    var fields: MutableList<EmbedBuilder.Field>?,
-                ) {
-                    data class EmbedFooter(val text: String, val icon: String?) {
-                        fun kord(): EmbedBuilder.Footer {
-                            return EmbedBuilder.Footer().also {
-                                it.text = this.text
-                                it.icon = this.icon
-                            }
-                        }
-                    }
-
-                    data class EmbedAuthor(val name: String?, val icon: String?, val url: String?) {
-                        fun kord(): EmbedBuilder.Author {
-                            return EmbedBuilder.Author().also {
-                                it.name = this.name
-                                it.icon = this.icon
-                                it.url = this.url
-                            }
-                        }
-                    }
-                }
-            }
+                val response: Message,
+            )
         }
     }
 
@@ -89,6 +56,57 @@ data class BotConfig(
         val statistic: Statistic,
         val data: String?
     )
+
+    data class Message(val text: String?, val embeds: List<Embed>?) {
+        data class Embed(
+            val title: String?,
+            val description: String?,
+            var url: String?,
+            var timestamp: Instant?,
+            var color: Color?,
+            var image: String?,
+            var footer: EmbedFooter?,
+            var thumbnail: String?,
+            var author: EmbedAuthor?,
+//          var fields: MutableList<EmbedBuilder.Field>?,
+        ) {
+            data class EmbedFooter(val text: String, val icon: String?) {
+                fun kord(): EmbedBuilder.Footer {
+                    return EmbedBuilder.Footer().also {
+                        it.text = this.text
+                        it.icon = this.icon
+                    }
+                }
+            }
+
+            data class EmbedAuthor(val name: String?, val icon: String?, val url: String?) {
+                fun kord(): EmbedBuilder.Author {
+                    return EmbedBuilder.Author().also {
+                        it.name = this.name
+                        it.icon = this.icon
+                        it.url = this.url
+                    }
+                }
+            }
+        }
+
+        fun embeds(): List<EmbedBuilder>? {
+            return this.embeds?.map {
+                EmbedBuilder().apply {
+                    title = it.title
+                    description = it.description
+                    url = it.url
+                    timestamp = it.timestamp
+                    color = it.color
+                    image = it.image
+                    footer = it.footer?.kord()
+                    thumbnail = it.thumbnail?.let { EmbedBuilder.Thumbnail().apply { url = it } }
+                    author = it.author?.kord()
+//                  fields = it.fields ?: ArrayList()
+                }
+            }
+        }
+    }
 
     fun validate(): String? {
         if (codebin.upload == BinService.PASTEBIN && System.getenv("PASTEBIN_API_KEY") == null) {
