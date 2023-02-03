@@ -336,8 +336,15 @@ audit:
       unbanned: true
       joined: true
       left: true
-      updated: true
       voice: true
+      updated:
+        enabled: true
+        nickname: true
+        username: true
+        avatar: true
+        memberAvatar: true
+        banner: true
+        discriminator: false
     messages:
       deleted: true
       edited: true

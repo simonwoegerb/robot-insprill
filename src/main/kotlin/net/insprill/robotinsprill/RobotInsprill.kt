@@ -115,6 +115,8 @@ class RobotInsprill(val logger: KLogger, val kord: Kord) {
         kord.login {
             @OptIn(PrivilegedIntent::class)
             intents += Intent.MessageContent
+            @OptIn(PrivilegedIntent::class)
+            intents += Intent.GuildMembers
         }
     }
 

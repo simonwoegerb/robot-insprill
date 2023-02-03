@@ -48,7 +48,18 @@ data class BotConfig(
                 val joined: Boolean,
                 val left: Boolean,
                 val voice: Boolean,
-            )
+                val updated: Updated
+            ) {
+                data class Updated(
+                    val enabled: Boolean,
+                    val nickname: Boolean,
+                    val username: Boolean,
+                    val avatar: Boolean,
+                    val memberAvatar: Boolean,
+                    val banner: Boolean,
+                    val discriminator: Boolean,
+                )
+            }
 
             data class Messages(val deleted: Boolean, val edited: Boolean, val invitePosted: Boolean)
             data class Server(val role: Role, val channel: Channel) {
