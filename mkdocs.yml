@@ -44,6 +44,8 @@ nav:
       - configuration/index.md
       - Environment Variables: configuration/env.md
       - The Configuration File: configuration/config.md
+  - Discord:
+      - Permissions: discord/perms.md
   - Contributing:
       - contributing/index.md
       - Development Environment: contributing/env.md
