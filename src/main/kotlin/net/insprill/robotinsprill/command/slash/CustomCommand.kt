@@ -29,10 +29,10 @@ class CustomCommand(
     }
 
     companion object {
-        fun buildCommandArray(config: BotConfig): Array<SlashCommand> {
+        fun buildCommandArray(config: BotConfig): Iterable<SlashCommand> {
             return config.commands.slash.custom.map {
                 CustomCommand(it.name, it.description, it)
-            }.toTypedArray()
+            }.toList()
         }
     }
 

@@ -20,7 +20,9 @@ import net.insprill.robotinsprill.audit.AuditManager
 import net.insprill.robotinsprill.command.CommandManager
 import net.insprill.robotinsprill.command.message.BinFiles
 import net.insprill.robotinsprill.command.message.Google
+import net.insprill.robotinsprill.command.slash.Clear
 import net.insprill.robotinsprill.command.slash.CustomCommand
+import net.insprill.robotinsprill.command.slash.SlashCommand
 import net.insprill.robotinsprill.configuration.BotConfig
 import net.insprill.robotinsprill.statistic.StatisticManager
 
@@ -83,9 +85,13 @@ class RobotInsprill(val logger: KLogger, val kord: Kord) {
         logger.info("Setting up command handlers")
         commandManager.setupEventHandlers()
         commandManager.registerCommands(
-            arrayOf(
+            listOf(
                 CustomCommand.buildCommandArray(this.config),
-            ).flatten(),
+                Clear(this)
+            ).flatMap {
+                @Suppress("UNCHECKED_CAST")
+                if (it is Iterable<*>) return@flatMap it as Iterable<SlashCommand> else return@flatMap listOf(it as SlashCommand)
+            },
             listOf(
                 BinFiles(this),
                 Google(this),

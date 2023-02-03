@@ -19,7 +19,8 @@ data class BotConfig(
             data class BinFiles(val enabled: Boolean)
             data class GoogleThat(val enabled: Boolean)
         }
-        data class Slash(val custom: List<CustomCommand>) {
+
+        data class Slash(val custom: List<CustomCommand>, val clear: Clear) {
             data class CustomCommand(
                 val name: String,
                 val description: String,
@@ -27,6 +28,8 @@ data class BotConfig(
                 val private: Boolean = false,
                 val response: Message,
             )
+
+            data class Clear(val enabled: Boolean, val limit: Long)
         }
     }
 

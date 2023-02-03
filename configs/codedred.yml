@@ -4,9 +4,12 @@ commands:
   message:
     binfiles:
       enabled: true
-    google:
+    googleThat:
       enabled: true
   slash:
+    clear:
+      enabled: true
+      limit: 128
     custom:
       - name: added
         description: Show Patrons how to access the GitHub

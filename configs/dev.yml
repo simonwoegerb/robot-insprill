@@ -4,9 +4,12 @@ commands:
   message:
     binfiles:
       enabled: true
-    google:
+    googleThat:
       enabled: true
   slash:
+    clear:
+      enabled: true
+      limit: 3
     custom:
       - name: custom-embed-command
         description: A custom embed command defined in the config
