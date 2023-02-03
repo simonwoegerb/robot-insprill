@@ -6,7 +6,8 @@ services:
     container_name: robot-insprill
     restart: always
     environment:
-      DISCORD_TOKEN: token # The token used to log in to the bot
-      PASTEBIN_KEY: key # This only needs to be set if you're uploading to pastebin
+      DISCORD_TOKEN: token # The token used to log in to the bot.
+      PASTEBIN_API_KEY: key # This only needs to be set if you're uploading to pastebin.
+      YOUTUBE_API_KEY: key # This only needs to be set if you're using a YouTube statistic channel.
     volumes:
       - ./config.yml:/config.yml

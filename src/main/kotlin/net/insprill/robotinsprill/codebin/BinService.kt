@@ -25,7 +25,7 @@ enum class BinService(private val downloadUrl: String) {
     PASTEBIN("https://%s/raw/%s") {
         override suspend fun uploadBinReq(domain: String, data: String): Request {
             // https://pastebin.com/doc_api
-            val encodedKey = URLEncoder.encode(System.getenv("PASTEBIN_KEY"), "UTF-8")
+            val encodedKey = URLEncoder.encode(System.getenv("PASTEBIN_API_KEY"), "UTF-8")
             val encodedBody = URLEncoder.encode(data, "UTF-8")
             val body = "api_dev_key=$encodedKey&api_option=paste&api_paste_private=1&api_paste_code=$encodedBody"
             return Fuel.post("https://$domain/api/api_post.php").body(body, Charsets.UTF_8)

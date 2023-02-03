@@ -91,8 +91,8 @@ data class BotConfig(
     )
 
     fun validate(): String? {
-        if (codebin.upload == BinService.PASTEBIN && System.getenv("PASTEBIN_KEY") == null) {
-            return "The PASTEBIN_KEY environment variable must be set to do uploads to pastebin!"
+        if (codebin.upload == BinService.PASTEBIN && System.getenv("PASTEBIN_API_KEY") == null) {
+            return "The PASTEBIN_API_KEY environment variable must be set to do uploads to pastebin!"
         }
         return null
     }
