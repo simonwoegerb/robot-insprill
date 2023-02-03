@@ -201,6 +201,5 @@ Network Trash Folder
 Temporary Items
 .apdisk
 
-# Robot Insprill
-# People will need to customize this file. The ignore can be overriden if a change is needed.
-configs/dev.yml
+### Robot Insprill
+config.yml

@@ -10,6 +10,7 @@ import dev.kord.core.supplier.EntitySupplyStrategy
 import dev.kord.gateway.Intent
 import dev.kord.gateway.PrivilegedIntent
 import java.io.File
+import java.nio.file.Files
 import java.util.*
 import kotlin.system.exitProcess
 import mu.KLogger
@@ -46,9 +47,19 @@ class RobotInsprill(val logger: KLogger, val kord: Kord) {
     init {
         logger.info("Starting Robot Insprill")
 
-        logger.info("Parsing configuration file")
+        logger.info("Searching for configuration file")
+        val defaultConfigFile = File("config.yml")
+        val devConfigFile = File("configs/dev.yml")
+        val configFileEnv = System.getenv("CONFIG_FILE")
+        if (configFileEnv == null && !defaultConfigFile.exists() && devConfigFile.exists()) {
+            logger.info("CONFIG_FILE not set and config.yml not found. Copying development config")
+            Files.copy(devConfigFile.toPath(), defaultConfigFile.toPath())
+        }
+        val configFile = configFileEnv ?: defaultConfigFile.name
+
+        logger.info("Parsing configuration file $configFile")
         config = ConfigLoaderBuilder.default()
-            .addFileSource(File(System.getenv("CONFIG_FILE") ?: "config.yml"))
+            .addFileSource(File(configFile))
             .build()
             .loadConfig<BotConfig>()
             .getOrElse {

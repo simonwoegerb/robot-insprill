@@ -8,6 +8,8 @@ During developing, if you're using IntelliJ, you can set them in the run configu
 When running in production, you can set them in your `docker-compose.yml` or in your startup script.
 
 - `DISCORD_TOKEN` (required) - The token used for your bot.
+- `CONFIG_FILE` - Relative path to the configuration file to use.
+  Will use `./config.yml` if unset, copying `configs/dev.yml` to `./config.yml` if it doesn't exist.
 - `PASTEBIN_API_KEY` - Your [Pastebin API key](https://pastebin.com/doc_api#1).
   You must be logged in to retrieve it.
   Only required when uploading bins to Pastebin.
