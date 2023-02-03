@@ -6,7 +6,7 @@ All packages referenced are under the root `net.insprill.robotinsprill` package.
 For more information on Kord, check out their [Wiki](https://github.com/kordlib/kord/wiki)
 and [Dokka](https://kordlib.github.io/kord/) docs.
 
-Use the table of contents
+Use the table of contents on the right to see all guides available here.
 
 ## Adding Commands
 
