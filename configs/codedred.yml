@@ -1,6 +1,11 @@
 guild-id: 365315337240969226
 
 commands:
+  message:
+    binfiles:
+      enabled: true
+    google:
+      enabled: true
   slash:
     custom:
       - name: added

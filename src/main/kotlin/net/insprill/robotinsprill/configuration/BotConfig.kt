@@ -14,11 +14,16 @@ data class BotConfig(
     val audit: Audit,
     val statisticChannels: List<StatisticChannel>
 ) {
-    data class Commands(val slash: Slash) {
+    data class Commands(val message: MessageCmd, val slash: Slash) {
+        data class MessageCmd(val binfiles: BinFiles, val googleThat: GoogleThat) {
+            data class BinFiles(val enabled: Boolean)
+            data class GoogleThat(val enabled: Boolean)
+        }
         data class Slash(val custom: List<CustomCommand>) {
             data class CustomCommand(
                 val name: String,
                 val description: String,
+                val enabled: Boolean = true,
                 val private: Boolean = false,
                 val response: Message,
             )

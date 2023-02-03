@@ -13,6 +13,9 @@ class CustomCommand(
 ) :
     SlashCommand() {
 
+    override val enabled: Boolean
+        get() = cmd.enabled
+
     override suspend fun execute(context: ChatInputCommandInteractionCreateEvent) {
         val res: InteractionResponseCreateBuilder.() -> Unit = {
             content = cmd.response.text

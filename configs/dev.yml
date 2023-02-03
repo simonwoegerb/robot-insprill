@@ -1,6 +1,11 @@
 guild-id: 709740759552884788
 
 commands:
+  message:
+    binfiles:
+      enabled: true
+    google:
+      enabled: true
   slash:
     custom:
       - name: custom-embed-command
@@ -22,6 +27,11 @@ commands:
           text: |-
             A multi-line message
             sent a plain text.
+      - name: disabled-command
+        description: A command that's disabled
+        enabled: false
+        response:
+          text: You shouldn't see this!
 
 statistic-channels: [ ]
 #  - channel-id: 1070824774009368636

@@ -24,13 +24,13 @@ class CommandManager(private val robot: RobotInsprill) {
 
     suspend fun registerCommands(sCommands: Iterable<SlashCommand>, mCommands: Iterable<MessageCommand>) {
         robot.kord.createGuildApplicationCommands(robot.config.guildId) {
-            sCommands.forEach { command ->
+            sCommands.filter { it.enabled }.forEach { command ->
                 input(command.name, command.description) { command.setup(this) }
                 slashCommands[command.name] = command
             }
             robot.logger.info("Registered ${slashCommands.size} slash commands")
 
-            mCommands.forEach { command ->
+            mCommands.filter { it.enabled }.forEach { command ->
                 message(command.name) { command.setup(this) }
                 messageCommands[command.name] = command
             }

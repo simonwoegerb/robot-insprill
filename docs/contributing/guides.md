@@ -27,7 +27,9 @@ To add a message command, create a new class in the `command.message` package.
 This class should extend `MessageCommand`
 
 ```kotlin
-class MyCommand : MessageCommand() 
+import net.insprill.robotinsprill.RobotInsprill
+
+class MyCommand(private val robot: RobotInsprill) : MessageCommand() 
 ```
 
 To set the name of the command, you'll need to override the `name` parameter.
@@ -35,6 +37,14 @@ To set the name of the command, you'll need to override the `name` parameter.
 ```kotlin
 override val name: String
     get() = "My Epic Command"
+```
+
+You'll also need to ensure people can disable the command.
+To do this, you can add a new config property and reference it here.
+
+```kotlin
+override val enabled: Boolean
+    get() = robot.config.commands.message.myCommand.enabled
 ```
 
 For the command's functionality, you'll need to override the `execute` function.
@@ -69,7 +79,9 @@ To add a slash command, create a new class in the `command.slash` package.
 This class should extend `SlashCommand`
 
 ```kotlin
-class MyCommand : SlashCommand() 
+import net.insprill.robotinsprill.RobotInsprill
+
+class MyCommand(private val robot: RobotInsprill) : SlashCommand() 
 ```
 
 To set the name and description of the command, you'll need to override the respective parameters.
@@ -79,6 +91,14 @@ override val name: String
     get() = "My Epic Command"
 override val name: String
     get() = "Does something awesome"
+```
+
+You'll also need to ensure people can disable the command.
+To do this, you can add a new config property and reference it here.
+
+```kotlin
+override val enabled: Boolean
+    get() = robot.config.commands.slash.myCommand.enabled
 ```
 
 For the command's functionality, you'll need to override the `execute` function.

@@ -11,6 +11,8 @@ class BinFiles(private val robot: RobotInsprill) : MessageCommand() {
 
     override val name: String
         get() = "Bin Files"
+    override val enabled: Boolean
+        get() = robot.config.commands.message.binfiles.enabled
 
     override suspend fun execute(context: MessageCommandInteractionCreateEvent) {
         val response = context.interaction.deferPublicResponse()
