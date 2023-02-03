@@ -48,7 +48,7 @@ class RobotInsprill(val logger: KLogger, val kord: Kord) {
 
         logger.info("Parsing configuration file")
         config = ConfigLoaderBuilder.default()
-            .addFileSource(File("config.yml"))
+            .addFileSource(File(System.getenv("CONFIG_FILE") ?: "config.yml"))
             .build()
             .loadConfig<BotConfig>()
             .getOrElse {
