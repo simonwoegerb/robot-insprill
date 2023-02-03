@@ -1,6 +1,7 @@
 package net.insprill.robotinsprill
 
 import com.sksamuel.hoplite.ConfigLoaderBuilder
+import com.sksamuel.hoplite.ExperimentalHoplite
 import com.sksamuel.hoplite.addFileSource
 import com.sksamuel.hoplite.fp.getOrElse
 import dev.kord.core.Kord
@@ -39,6 +40,7 @@ suspend fun main() {
         .login()
 }
 
+@OptIn(ExperimentalHoplite::class)
 class RobotInsprill(val logger: KLogger, val kord: Kord) {
 
     private val commandManager: CommandManager
@@ -60,6 +62,7 @@ class RobotInsprill(val logger: KLogger, val kord: Kord) {
         logger.info("Parsing configuration file $configFile")
         config = ConfigLoaderBuilder.default()
             .addFileSource(File(configFile))
+            .flattenArraysToString()
             .build()
             .loadConfig<BotConfig>()
             .getOrElse {
