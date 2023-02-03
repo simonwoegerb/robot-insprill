@@ -3,7 +3,6 @@ package net.insprill.robotinsprill.command
 import dev.kord.core.event.interaction.GuildChatInputCommandInteractionCreateEvent
 import dev.kord.core.event.interaction.GuildMessageCommandInteractionCreateEvent
 import dev.kord.core.on
-import dev.kord.rest.request.StackTraceRecoveringKtorRequestHandler
 import kotlinx.coroutines.flow.collect
 import net.insprill.robotinsprill.RobotInsprill
 import net.insprill.robotinsprill.command.message.MessageCommand
@@ -23,13 +22,13 @@ class CommandManager(private val robot: RobotInsprill) {
         }
     }
 
-    suspend fun registerCommands(sCommands: Array<SlashCommand>, mCommands: Array<MessageCommand>) {
+    suspend fun registerCommands(sCommands: Iterable<SlashCommand>, mCommands: Iterable<MessageCommand>) {
         robot.kord.createGuildApplicationCommands(robot.config.guildId) {
             sCommands.forEach { command ->
                 input(command.name, command.description) { command.setup(this) }
                 slashCommands[command.name] = command
             }
-            robot.logger.info("Registered ${sCommands.size} slash commands")
+            robot.logger.info("Registered ${slashCommands.size} slash commands")
 
             mCommands.forEach { command ->
                 message(command.name) { command.setup(this) }

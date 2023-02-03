@@ -69,10 +69,12 @@ class RobotInsprill(val logger: KLogger, val kord: Kord) {
         logger.info("Setting up command handlers")
         commandManager.setupEventHandlers()
         commandManager.registerCommands(
-            CustomCommand.buildCommandArray(this.config),
             arrayOf(
+                CustomCommand.buildCommandArray(this.config),
+            ).flatten(),
+            listOf(
                 BinFiles(this),
-                Google()
+                Google(),
             )
         )
     }
