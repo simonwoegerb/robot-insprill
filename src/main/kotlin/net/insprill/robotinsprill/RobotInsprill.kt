@@ -88,7 +88,7 @@ class RobotInsprill(val logger: KLogger, val kord: Kord) {
             ).flatten(),
             listOf(
                 BinFiles(this),
-                Google(),
+                Google(this),
             )
         )
     }
