@@ -23,7 +23,6 @@ class AuditManager(private val robot: RobotInsprill) {
     }
 
     suspend fun sendUserMessage(
-        guildId: Snowflake,
         user: User,
         color: AuditColor,
         title: String,
@@ -31,23 +30,22 @@ class AuditManager(private val robot: RobotInsprill) {
     ) {
         if (!robot.config.audit.logBots && user.isBot) return
         val embed = buildUserEmbed(user, color, title, description)
-        sendMessage(guildId, embed)
+        sendMessage(embed)
     }
 
     suspend fun sendServerMessage(
-        guildId: Snowflake,
         color: AuditColor,
         title: String,
         footer: String?,
     ) {
         val embed = buildServerEmbed(color, title, footer)
-        sendMessage(guildId, embed)
+        sendMessage(embed)
     }
 
-    private suspend fun sendMessage(guildId: Snowflake, embed: EmbedBuilder.() -> Unit) {
-        channelCache.getOrPut(guildId) {
-            robot.kord.getGuildOrThrow(guildId)
-                .getChannel(robot.config.audit.auditChannels[guildId]!!) as MessageChannel
+    private suspend fun sendMessage(embed: EmbedBuilder.() -> Unit) {
+        channelCache.getOrPut(robot.config.guildId) {
+            robot.kord.getGuildOrThrow(robot.config.guildId)
+                .getChannel(robot.config.audit.auditChannel) as MessageChannel
         }.createEmbed(embed)
     }
 

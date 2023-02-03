@@ -16,8 +16,6 @@ import mu.KLogger
 import mu.KotlinLogging
 import net.insprill.robotinsprill.audit.AuditManager
 import net.insprill.robotinsprill.command.CommandManager
-import net.insprill.robotinsprill.command.DevCommandManager
-import net.insprill.robotinsprill.command.ProdCommandManager
 import net.insprill.robotinsprill.command.message.BinFiles
 import net.insprill.robotinsprill.command.message.Google
 import net.insprill.robotinsprill.command.slash.CustomCommand
@@ -27,6 +25,7 @@ import net.insprill.robotinsprill.statistic.StatisticManager
 suspend fun main() {
     val logger = KotlinLogging.logger("Robot Insprill")
     val kord = Kord(System.getenv("DISCORD_TOKEN")) {
+        stackTraceRecovery = true
         defaultStrategy = EntitySupplyStrategy.cacheWithCachingRestFallback
         cache {
             messages(lruCache(2048))
@@ -63,12 +62,7 @@ class RobotInsprill(val logger: KLogger, val kord: Kord) {
             exitProcess(1)
         }
 
-        logger.info("Using the ${if (DevCommandManager.guildId != null) "development" else "production"} command manager")
-        commandManager = if (DevCommandManager.guildId != null) {
-            DevCommandManager(this)
-        } else {
-            ProdCommandManager(this)
-        }
+        commandManager = CommandManager(this)
     }
 
     suspend fun registerCommands() = apply {

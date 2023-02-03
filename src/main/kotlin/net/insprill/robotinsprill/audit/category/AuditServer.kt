@@ -15,14 +15,13 @@ class AuditServer(robot: RobotInsprill, audit: AuditManager) : AuditCategory(rob
         val roleConfig = robot.config.audit.events.server.role
         val channelConfig = robot.config.audit.events.server.channel
         event<RoleCreateEvent>(roleConfig.created) {
-            send(guildId, AuditColor.GREEN, "Role <@&${role.id}> was created.", "Role ID: ${role.id}")
+            send(AuditColor.GREEN, "Role <@&${role.id}> was created.", "Role ID: ${role.id}")
         }
         event<RoleDeleteEvent>(roleConfig.deleted) {
-            send(guildId, AuditColor.RED, "Role @${role?.name} was deleted.", "Role ID: $roleId")
+            send(AuditColor.RED, "Role @${role?.name} was deleted.", "Role ID: $roleId")
         }
         event<ChannelCreateEvent>(channelConfig.created) {
             send(
-                channel.data.guildId.value,
                 AuditColor.GREEN,
                 "${channel.type.prettyName()} channel <#${channel.id}> was created.",
                 "Channel ID: ${channel.id}"
@@ -30,7 +29,6 @@ class AuditServer(robot: RobotInsprill, audit: AuditManager) : AuditCategory(rob
         }
         event<ChannelDeleteEvent>(channelConfig.deleted) {
             send(
-                channel.data.guildId.value,
                 AuditColor.RED,
                 "${channel.type.prettyName()} channel #${channel.data.name.value} was deleted.",
                 "Channel ID: ${channel.id}"

@@ -13,12 +13,11 @@ class AuditMessages(robot: RobotInsprill, audit: AuditManager) : AuditCategory(r
     override fun registerEvents() {
         val config = robot.config.audit.events.messages
         fun isIgnored(id: Snowflake): Boolean {
-            return robot.config.audit.ignoreChannels.values.contains(id)
+            return robot.config.audit.ignoreChannels.contains(id)
         }
         event<MessageDeleteEvent>(config.deleted) {
             if (isIgnored(channelId)) return@event
             send(
-                guildId,
                 message?.author,
                 AuditColor.RED,
                 "Message sent by <@${message?.author?.id}> deleted in <#${channelId}>.",
@@ -28,7 +27,6 @@ class AuditMessages(robot: RobotInsprill, audit: AuditManager) : AuditCategory(r
         event<MessageUpdateEvent>(config.edited) {
             if (isIgnored(channelId)) return@event
             send(
-                getMessage().getGuild().id,
                 getMessage().author,
                 AuditColor.ORANGE,
                 "Message sent by <@${getMessage().author?.id}> edited in <#${channelId}>.",
@@ -45,7 +43,6 @@ class AuditMessages(robot: RobotInsprill, audit: AuditManager) : AuditCategory(r
             if (isIgnored(message.channelId)) return@event
             if (!INVITE_PATTERN.containsMatchIn(message.content)) return@event
             send(
-                guildId,
                 message.author,
                 AuditColor.ORANGE,
                 "Invite posted by <@${message.author?.id}> in <#${message.channelId}>.",

@@ -1,3 +1,5 @@
+guild-id: 365315337240969226
+
 commands:
   slash:
     custom:
@@ -271,7 +273,7 @@ commands:
         message: https://xyproblem.info/
 
 statistic-channels:
-  - channel-id: [ 365315337240969226, 821976647863238696 ]
+  - channel-id: 821976647863238696
     format: "CodedRed Subs: %s"
     statistic: YOUTUBE_SUBS
     data: UC_kPUW3XPrCCRT9a4Pnf1Tg
@@ -291,11 +293,11 @@ codebin:
       - pastebin.com
 
 audit:
-  audit-channels:
-    365315337240969226: 699125029580832851
-    709740759552884788: 793644931943497809
+  audit-channel: 699125029580832851
   ignore-channels:
-    365315337240969226: 692793636429103228
+    - 692793636429103228
+    - 699336876967985312
+    - 772145081439354890
   log-bots: false
   events:
     members:

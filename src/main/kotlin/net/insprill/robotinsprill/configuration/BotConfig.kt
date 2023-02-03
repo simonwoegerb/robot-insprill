@@ -8,6 +8,7 @@ import net.insprill.robotinsprill.codebin.BinService
 import net.insprill.robotinsprill.statistic.Statistic
 
 data class BotConfig(
+    val guildId: Snowflake,
     val commands: Commands,
     val codebin: Bin,
     val audit: Audit,
@@ -60,8 +61,8 @@ data class BotConfig(
     data class Bin(val upload: BinService, val services: Map<BinService, List<String>>)
 
     data class Audit(
-        val auditChannels: Map<Snowflake, Snowflake>,
-        val ignoreChannels: Map<Snowflake, Snowflake>,
+        val auditChannel: Snowflake,
+        val ignoreChannels: List<Snowflake>,
         val logBots: Boolean,
         val events: Events
     ) {
@@ -83,7 +84,7 @@ data class BotConfig(
     }
 
     data class StatisticChannel(
-        val channelId: Pair<Snowflake, Snowflake>,
+        val channelId: Snowflake,
         val format: String,
         val statistic: Statistic,
         val data: String?

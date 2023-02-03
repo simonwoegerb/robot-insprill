@@ -1,6 +1,5 @@
 package net.insprill.robotinsprill.audit.category
 
-import dev.kord.common.entity.Snowflake
 import dev.kord.core.entity.User
 import dev.kord.core.event.Event
 import dev.kord.core.on
@@ -12,24 +11,16 @@ sealed class AuditCategory(val robot: RobotInsprill, private val audit: AuditMan
 
     abstract fun registerEvents()
 
-    suspend fun send(guildId: Snowflake?, user: User?, color: AuditColor, title: String, description: String? = null) {
-        if (guildId == null) {
-            robot.logger.debug { "Tried to send audit message with no guildId." }
-            return
-        }
+    suspend fun send(user: User?, color: AuditColor, title: String, description: String? = null) {
         if (user == null) {
             robot.logger.debug { "Tried to send audit message with no user." }
             return
         }
-        audit.sendUserMessage(guildId, user, color, title, description)
+        audit.sendUserMessage(user, color, title, description)
     }
 
-    suspend fun send(guildId: Snowflake?, color: AuditColor, title: String, footer: String? = null) {
-        if (guildId == null) {
-            robot.logger.debug { "Tried to send audit message with no guildId." }
-            return
-        }
-        audit.sendServerMessage(guildId, color, title, footer)
+    suspend fun send(color: AuditColor, title: String, footer: String? = null) {
+        audit.sendServerMessage(color, title, footer)
     }
 
     inline fun <reified T : Event> event(
