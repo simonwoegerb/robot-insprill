@@ -3,8 +3,8 @@ package net.insprill.robotinsprill.command.message
 import dev.kord.core.behavior.interaction.respondPublic
 import dev.kord.core.event.interaction.MessageCommandInteractionCreateEvent
 import dev.kord.rest.builder.message.create.embed
-import java.net.URLEncoder
 import net.insprill.robotinsprill.RobotInsprill
+import net.insprill.robotinsprill.extension.urlEncoded
 
 class Google(private val robot: RobotInsprill) : MessageCommand() {
 
@@ -15,11 +15,10 @@ class Google(private val robot: RobotInsprill) : MessageCommand() {
 
     override suspend fun execute(context: MessageCommandInteractionCreateEvent) {
         val content = context.interaction.getTarget().content
-        val encodedContent = URLEncoder.encode(content, Charsets.UTF_8)
         context.interaction.respondPublic {
             embed {
                 title = content
-                url = "https://letmegooglethat.com/?q=$encodedContent"
+                url = "https://letmegooglethat.com/?q=${content.urlEncoded()}"
             }
         }
     }
