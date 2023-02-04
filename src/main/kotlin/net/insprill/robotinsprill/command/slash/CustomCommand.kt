@@ -5,6 +5,7 @@ import dev.kord.core.behavior.interaction.respondPublic
 import dev.kord.core.event.interaction.ChatInputCommandInteractionCreateEvent
 import dev.kord.rest.builder.message.create.InteractionResponseCreateBuilder
 import net.insprill.robotinsprill.configuration.BotConfig
+import net.insprill.robotinsprill.extension.message
 
 class CustomCommand(
     override val name: String,
@@ -18,8 +19,7 @@ class CustomCommand(
 
     override suspend fun execute(context: ChatInputCommandInteractionCreateEvent) {
         val res: InteractionResponseCreateBuilder.() -> Unit = {
-            content = cmd.response.text
-            cmd.response.embeds()?.let { embeds.addAll(it) }
+            message(cmd.response)
         }
         if (cmd.private) {
             context.interaction.respondEphemeral(res)

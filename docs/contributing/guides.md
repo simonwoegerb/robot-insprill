@@ -208,15 +208,17 @@ Once it's created, add it to the file `src/resources/META-INF/services/com.sksam
 Responding to interactions with a text message or embed is fairly common, so there's an easy way to handle it.
 
 The BotConfig has a subclass called `Message`, that can have `text` and multiple `embeds`.
-This can easily be integrated into an interaction response like the following
+This can easily be integrated into an interaction response by using the `InteractionResponseCreateBuilder` extension
+function `net.insprill.robotinsprill.extension.message`.
 
 ```kotlin
 val message: BotConfig.Message = ...
 context.interaction.respondPublic {
-    content = message.text
-    message.embeds()?.let { embeds.addAll(it) }
+    message(message)
 }
 ```
+
+This will set the response's `content` field, and add all the Message's embeds.
 
 ## Statistics
 
