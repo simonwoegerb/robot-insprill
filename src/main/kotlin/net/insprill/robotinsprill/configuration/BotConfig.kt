@@ -87,15 +87,15 @@ data class BotConfig(
 
     data class Message(val text: String?, val embeds: List<Embed>?) {
         data class Embed(
-            val title: String?,
-            val description: String?,
-            var url: String?,
-            var timestamp: Instant?,
-            var color: Color?,
-            var image: String?,
-            var footer: EmbedFooter?,
-            var thumbnail: String?,
             var author: EmbedAuthor?,
+            val title: String?,
+            var url: String?,
+            val description: String?,
+            var image: String?,
+            var thumbnail: String?,
+            var color: Color?,
+            var footer: EmbedFooter?,
+            var timestamp: Instant?,
 //          var fields: MutableList<EmbedBuilder.Field>?,
         ) {
             data class EmbedFooter(val text: String, val icon: String?) {
