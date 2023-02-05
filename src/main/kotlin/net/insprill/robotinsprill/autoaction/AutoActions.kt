@@ -4,6 +4,7 @@ import dev.kord.core.entity.Message
 import dev.kord.core.event.message.MessageCreateEvent
 import dev.kord.core.on
 import net.insprill.robotinsprill.RobotInsprill
+import net.insprill.robotinsprill.extension.parentOrSelf
 
 class AutoActions(private val robot: RobotInsprill) {
 
@@ -15,9 +16,10 @@ class AutoActions(private val robot: RobotInsprill) {
     }
 
     private suspend fun handle(message: Message) {
+        val channel = message.getChannel().parentOrSelf()
         val autoActions = robot.config.autoActions
             .filter { it.bots == message.author?.isBot }
-            .filter { it.channels == null || message.channelId in it.channels }
+            .filter { it.channels == null || channel.id in it.channels }
         val actions = autoActions.map { it.actions }.flatten()
         val strings = autoActions.flatMap { it.media }.distinct().flatMap {
             it.findText(robot, message)

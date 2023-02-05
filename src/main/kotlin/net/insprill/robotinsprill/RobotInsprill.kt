@@ -35,6 +35,7 @@ suspend fun main() {
         defaultStrategy = EntitySupplyStrategy.cacheWithCachingRestFallback
         cache {
             messages(lruCache(2048))
+            channels(lruCache(512))
         }
     }
     RobotInsprill(logger, kord)
