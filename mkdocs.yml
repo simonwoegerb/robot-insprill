@@ -47,6 +47,7 @@ nav:
         - Messages: configuration/props/messages.md
         - Emojis: configuration/props/emojis.md
       - Automatic Actions: configuration/autoactions.md
+      - Statistic Channels: configuration/statchannels.md
   - Discord:
       - Permissions: discord/perms.md
   - Contributing:

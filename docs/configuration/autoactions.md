@@ -40,5 +40,5 @@ auto-actions:
         responses:
           - text: NO BIG BOY
         reactions:
-          - name: 🚂
+          - name: ❌
 ```
