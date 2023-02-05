@@ -17,6 +17,7 @@ import kotlin.system.exitProcess
 import mu.KLogger
 import mu.KotlinLogging
 import net.insprill.robotinsprill.audit.AuditManager
+import net.insprill.robotinsprill.autoaction.AutoActions
 import net.insprill.robotinsprill.command.CommandManager
 import net.insprill.robotinsprill.command.message.BinFiles
 import net.insprill.robotinsprill.command.message.Google
@@ -24,6 +25,7 @@ import net.insprill.robotinsprill.command.slash.Clear
 import net.insprill.robotinsprill.command.slash.CustomCommand
 import net.insprill.robotinsprill.command.slash.SlashCommand
 import net.insprill.robotinsprill.configuration.BotConfig
+import net.insprill.robotinsprill.ocr.Tesseract
 import net.insprill.robotinsprill.statistic.StatisticManager
 
 suspend fun main() {
@@ -39,6 +41,8 @@ suspend fun main() {
         .registerCommands()
         .registerAuditEvents()
         .registerLoginEvents()
+        .registerAutoActions()
+        .initTesseract()
         .login()
 }
 
@@ -107,6 +111,16 @@ class RobotInsprill(val logger: KLogger, val kord: Kord) {
         kord.on<ReadyEvent> {
             StatisticManager(this@RobotInsprill).start(3600 * 1000)
             logger.info("Logged into {}", kord.getSelf().tag)
+        }
+    }
+
+    fun registerAutoActions() = apply {
+        AutoActions(this).setupEventHandlers()
+    }
+
+    fun initTesseract() = apply {
+        Tesseract.exception?.let {
+            logger.error("Failed to initialize Tesseract! OCR functions will not be available.", it)
         }
     }
 

@@ -11,3 +11,4 @@ services:
       YOUTUBE_API_KEY: key # This only needs to be set if you're using a YouTube statistic channel.
     volumes:
       - ./config.yml:/config.yml
+      - ./ocr:/ocr

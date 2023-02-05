@@ -2,8 +2,10 @@ package net.insprill.robotinsprill.configuration
 
 import dev.kord.common.Color
 import dev.kord.common.entity.Snowflake
+import dev.kord.core.entity.ReactionEmoji
 import dev.kord.rest.builder.message.EmbedBuilder
 import kotlinx.datetime.Instant
+import net.insprill.robotinsprill.autoaction.MediaType
 import net.insprill.robotinsprill.codebin.BinService
 import net.insprill.robotinsprill.statistic.Statistic
 
@@ -12,7 +14,8 @@ data class BotConfig(
     val commands: Commands,
     val codebin: Bin,
     val audit: Audit,
-    val statisticChannels: List<StatisticChannel>
+    val statisticChannels: List<StatisticChannel>,
+    val autoActions: List<AutoAction>,
 ) {
     data class Commands(val message: MessageCmd, val slash: Slash) {
         data class MessageCmd(val binfiles: BinFiles, val googleThat: GoogleThat) {
@@ -33,7 +36,13 @@ data class BotConfig(
         }
     }
 
-    data class Bin(val upload: BinService, val services: Map<BinService, List<String>>)
+    data class Bin(val upload: BinService, val services: Map<BinService, List<String>>) {
+        private val basePattern = "https:\\/\\/%s\\/(?<key>%s)"
+        val patterns = services.mapValues { (service, domains) ->
+            domains.map { it.replace(".", "\\.") }
+                .map { Regex(basePattern.format(it, service.keyPattern)) }
+        }
+    }
 
     data class Audit(
         val auditChannel: Snowflake,
@@ -125,6 +134,25 @@ data class BotConfig(
                 }
             }
         }
+    }
+
+    data class Emoji(val name: String, val id: Snowflake?, val animated: Boolean = false) {
+        fun asReactionEmoji(): ReactionEmoji {
+            return if (id == null) {
+                ReactionEmoji.Unicode(name)
+            } else {
+                ReactionEmoji.Custom(id, name, animated)
+            }
+        }
+    }
+
+    data class AutoAction(
+        val channels: Set<Snowflake>?,
+        val media: Set<MediaType>,
+        val bots: Boolean = false,
+        val actions: List<Action>
+    ) {
+        data class Action(val pattern: Regex, val reactions: Set<Emoji>?, val responses: List<Message>?)
     }
 
     fun validate(): String? {

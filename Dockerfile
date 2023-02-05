@@ -12,7 +12,8 @@ RUN gradle build --no-daemon
 ####################################################################################################
 ## Final image
 ####################################################################################################
-FROM eclipse-temurin:17.0.5_8-jre-alpine
+# JavaCPP presets for Tesseract doesn't support Alpine :/
+FROM eclipse-temurin:17-jre
 
 # Copy our build
 COPY --from=builder /robot-insprill/build/libs/robot-insprill*.jar /robot-insprill.jar

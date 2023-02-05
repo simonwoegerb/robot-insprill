@@ -303,6 +303,8 @@ commands:
         response:
           text: https://xyproblem.info/
 
+auto-actions: [ ]
+
 statistic-channels:
   - channel-id: 821976647863238696
     format: "CodedRed Subs: %s"

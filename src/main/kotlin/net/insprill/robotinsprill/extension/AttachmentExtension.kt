@@ -9,3 +9,10 @@ suspend fun Attachment.stringContent(): Result<String> {
         { err -> return Result.failure(err) }
     )
 }
+
+suspend fun Attachment.byteContent(): Result<ByteArray> {
+    Fuel.get(this.url).awaitByteArrayKResult().fold(
+        { content -> return Result.success(content) },
+        { err -> return Result.failure(err) }
+    )
+}

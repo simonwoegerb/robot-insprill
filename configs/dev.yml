@@ -36,6 +36,22 @@ commands:
         response:
           text: You shouldn't see this!
 
+auto-actions:
+  - media:
+      - TEXT
+      - FILE
+      - BIN
+      - IMAGE
+    bots: false
+    actions:
+      - pattern: "Hello there!"
+        responses:
+          - embeds:
+              - title: Hi!
+                description: How are you?
+        reactions:
+          - name: 🚂
+
 statistic-channels: [ ]
 #  - channel-id: 1070824774009368636
 #    format: "Train People: %s"

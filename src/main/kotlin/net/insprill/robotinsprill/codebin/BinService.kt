@@ -12,18 +12,18 @@ import net.insprill.robotinsprill.extension.awaitStringKResult
 import net.insprill.robotinsprill.extension.urlEncoded
 
 @Suppress("unused")
-enum class BinService(private val downloadUrl: String) {
-    HASTEBIN_LEGACY("https://%s/raw/%s") {
+enum class BinService(private val downloadUrl: String, val keyPattern: String) {
+    HASTEBIN_LEGACY("https://%s/raw/%s", "[a-z]+") {
         override suspend fun uploadBinReq(domain: String, data: String): Request {
             return Fuel.post("https://$domain/documents").body(data)
         }
     },
-    LUCKO_PASTE("https://%s/data/%s") {
+    LUCKO_PASTE("https://%s/data/%s", "[a-zA-Z0-9]+") {
         override suspend fun uploadBinReq(domain: String, data: String): Request {
             return Fuel.post("https://$domain/data/post").body(data)
         }
     },
-    PASTEBIN("https://%s/raw/%s") {
+    PASTEBIN("https://%s/raw/%s", "[a-zA-Z0-9]{5,10}") {
         override suspend fun uploadBinReq(domain: String, data: String): Request {
             // https://pastebin.com/doc_api
             val encodedKey = System.getenv("PASTEBIN_API_KEY").urlEncoded()
@@ -39,7 +39,7 @@ enum class BinService(private val downloadUrl: String) {
                     { err -> return Result.failure(err) })
         }
     },
-    SOURCE_BIN("https://cdn.%s/bins/%s") {
+    SOURCE_BIN("https://cdn.%s/bins/%s", "[a-zA-Z0-9]{10}") {
         override suspend fun uploadBinReq(domain: String, data: String): Request {
             val reqBody = SourceBinRequest(listOf(SourceBinRequest.File("", data)))
             return Fuel.post("https://$domain/api/bins").jsonBody(Json.encodeToString(reqBody))

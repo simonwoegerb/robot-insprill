@@ -12,6 +12,7 @@ version = getFullVersion()
 
 repositories {
     mavenCentral()
+    maven("https://oss.sonatype.org/content/repositories/snapshots") // Tesseract Platform 5.3 SNAPSHOT
 }
 
 dependencies {
@@ -27,6 +28,9 @@ dependencies {
     implementation("com.github.kittinunf.fuel:fuel:2.3.1")
     implementation("com.github.kittinunf.fuel:fuel-coroutines:2.3.1")
     implementation("com.github.kittinunf.fuel:fuel-kotlinx-serialization:2.3.1")
+
+    // OCR
+    implementation("org.bytedeco:tesseract-platform:5.3.0-1.5.9-SNAPSHOT")
 
     // Logging
     implementation("ch.qos.logback:logback-classic:1.4.5")
@@ -44,6 +48,8 @@ tasks {
 
     shadowJar {
         archiveClassifier.set("")
+
+        mergeServiceFiles()
 
         manifest {
             attributes["Main-Class"] = "net.insprill.robotinsprill.RobotInsprillKt"
