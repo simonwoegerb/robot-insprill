@@ -62,8 +62,7 @@ class AuditManager(private val robot: RobotInsprill) {
                 icon = user.avatar?.url
             }
             this.color = color.color
-            this.description = "**$title**\n\n${if (description != null) "$description\n\n" else ""}$footer"
-
+            this.description = "**$title**\n\n${if (!description.isNullOrBlank()) "$description\n\n" else ""}$footer"
         }
     }
 
