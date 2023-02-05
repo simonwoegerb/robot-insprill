@@ -43,7 +43,10 @@ nav:
   - Configuration:
       - configuration/index.md
       - Environment Variables: configuration/env.md
-      - The Configuration File: configuration/config.md
+      - Custom Properties:
+        - Messages: configuration/props/messages.md
+        - Emojis: configuration/props/emojis.md
+      - Automatic Actions: configuration/autoactions.md
   - Discord:
       - Permissions: discord/perms.md
   - Contributing:
