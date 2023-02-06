@@ -10,6 +10,41 @@ commands:
     clear:
       enabled: true
       limit: 128
+    select-roles:
+      enabled: true
+      initial-response:
+        text: Select your roles.
+      updated-response:
+        text: Roles updated!
+      roles:
+        - id: 422765390804811798
+          emoji:
+            name: PepeSalute
+            id: 682068535874289690
+        - id: 572870240258490397
+          emoji:
+            name: kingPeppo
+            id: 599402709921300511
+        - id: 706715185032855603
+          emoji:
+            name: youtube
+            id: 750205369648939028
+        - id: 741802867060637806
+          emoji:
+            name: twitch
+            id: 750205150005690408
+        - id: 709253846529998938
+          emoji:
+            name: IntelliJ
+            id: 869666786277199872
+        - id: 709253726824693912
+          emoji:
+            name: Eclipse
+            id: 708893584824467536
+        - id: 800914748161261608
+          emoji:
+            name: VSC
+            id: 800914318463205386
     custom:
       - name: added
         description: Show Patrons how to access the GitHub
@@ -303,7 +338,53 @@ commands:
         response:
           text: https://xyproblem.info/
 
-auto-actions: [ ]
+auto-actions:
+  - media:
+      - TEXT
+    actions:
+      - pattern: "(?i)amo(ng |g)?us"
+        reactions:
+          - name: amogus
+            id: 816458040982896650
+  - channels:
+      - 1027121783792480296
+    media:
+      - TEXT
+      - FILE
+      - BIN
+      - IMAGE
+    actions:
+      - pattern: "FileNotFoundException: Jar does not contain plugin.yml"
+        responses:
+          - embeds:
+              - title: You forgot to add a `plugin.yml`, or it's in the wrong location.
+                description: |-
+                  If you aren't using Maven or Gradle, make sure the `plugin.yml` is *just* in the `src` folder, **not in a package**.
+
+                  ```
+                  src/
+                  ├── ...
+                  └── plugin.yml
+
+                  ```
+                  If you are using Maven or Gradle, then it should be in `src/main/resources`.
+                  ```
+                  src/
+                  └── main/
+                      ├── java/
+                      └── resources/
+                          └── plugin.yml
+                  ```
+
+                  [More information about the plugin.yml](https://www.spigotmc.org/wiki/plugin-yml/)
+      - pattern: "uses the space-character \\(0x20\\) in its name"
+        responses:
+          - embeds:
+              - title: You cannot have spaces in your plugin name!
+                description: |-
+                  You may only have upper and lowercase letters, numbers, and underscores.
+
+                  [More information about the plugin.yml](https://www.spigotmc.org/wiki/plugin-yml/)
 
 statistic-channels:
   - channel-id: 821976647863238696
