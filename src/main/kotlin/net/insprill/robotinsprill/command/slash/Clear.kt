@@ -7,7 +7,7 @@ import dev.kord.core.behavior.interaction.response.respond
 import dev.kord.core.event.interaction.ChatInputCommandInteractionCreateEvent
 import dev.kord.core.supplier.EntitySupplyStrategy
 import dev.kord.rest.builder.interaction.ChatInputCreateBuilder
-import dev.kord.rest.builder.interaction.int
+import dev.kord.rest.builder.interaction.integer
 import java.lang.Long.min
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.takeWhile
@@ -26,7 +26,7 @@ class Clear(private val robot: RobotInsprill) : SlashCommand() {
     override fun setup(builder: ChatInputCreateBuilder) {
         builder.apply {
             defaultMemberPermissions = Permissions(Permission.ManageMessages)
-            int("amount", "How many messages to clear. Messages older than 14 days may not be deleted.") {
+            integer("amount", "How many messages to clear. Messages older than 14 days may not be deleted.") {
                 required = true
             }
         }

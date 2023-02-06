@@ -12,12 +12,12 @@ version = getFullVersion()
 
 repositories {
     mavenCentral()
-    maven("https://oss.sonatype.org/content/repositories/snapshots") // Tesseract Platform 5.3 SNAPSHOT
+    maven("https://oss.sonatype.org/content/repositories/snapshots") // Kord 0.8 SNAPSHOT, Tesseract Platform 5.3 SNAPSHOT
 }
 
 dependencies {
     // Discord
-    implementation("dev.kord:kord-core:0.8.0-M17")
+    implementation("dev.kord:kord-core:0.8.x-SNAPSHOT")
 
     // Configuration
     implementation("com.sksamuel.hoplite:hoplite-core:2.7.1")
