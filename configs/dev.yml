@@ -9,7 +9,23 @@ commands:
   slash:
     clear:
       enabled: true
-      limit: 3
+      limit: 10
+    select-roles:
+      enabled: false
+      initial-response:
+        text: Select your roles.
+      updated-response:
+        text: Roles updated!
+      roles:
+        - id: 893271631189934080
+          emoji:
+            name: 📡
+        - id: 1072035607372644353
+          emoji:
+            name: ❗
+        - id: 1072035568663408640
+          emoji:
+            name: 🛒
     custom:
       - name: custom-embed-command
         description: A custom embed command defined in the config

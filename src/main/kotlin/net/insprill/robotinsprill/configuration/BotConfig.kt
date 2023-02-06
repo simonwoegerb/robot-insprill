@@ -1,7 +1,9 @@
 package net.insprill.robotinsprill.configuration
 
 import dev.kord.common.Color
+import dev.kord.common.entity.DiscordPartialEmoji
 import dev.kord.common.entity.Snowflake
+import dev.kord.common.entity.optional.OptionalBoolean
 import dev.kord.core.entity.ReactionEmoji
 import dev.kord.rest.builder.message.EmbedBuilder
 import kotlinx.datetime.Instant
@@ -23,7 +25,7 @@ data class BotConfig(
             data class GoogleThat(val enabled: Boolean)
         }
 
-        data class Slash(val custom: List<CustomCommand>, val clear: Clear) {
+        data class Slash(val custom: List<CustomCommand>, val clear: Clear, val selectRoles: SelectRoles) {
             data class CustomCommand(
                 val name: String,
                 val description: String,
@@ -33,6 +35,14 @@ data class BotConfig(
             )
 
             data class Clear(val enabled: Boolean, val limit: Long)
+            data class SelectRoles(
+                val enabled: Boolean,
+                val initialResponse: Message,
+                val updatedResponse: Message,
+                val roles: List<Roles>
+            ) {
+                data class Roles(val id: Snowflake, val emoji: Emoji?)
+            }
         }
     }
 
@@ -143,6 +153,10 @@ data class BotConfig(
             } else {
                 ReactionEmoji.Custom(id, name, animated)
             }
+        }
+
+        fun asPartialEmoji(): DiscordPartialEmoji {
+            return DiscordPartialEmoji(id, name, OptionalBoolean.Value(animated))
         }
     }
 

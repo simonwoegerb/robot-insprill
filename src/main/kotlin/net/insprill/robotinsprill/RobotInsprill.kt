@@ -23,6 +23,7 @@ import net.insprill.robotinsprill.command.message.BinFiles
 import net.insprill.robotinsprill.command.message.Google
 import net.insprill.robotinsprill.command.slash.Clear
 import net.insprill.robotinsprill.command.slash.CustomCommand
+import net.insprill.robotinsprill.command.slash.SelectRoles
 import net.insprill.robotinsprill.command.slash.SlashCommand
 import net.insprill.robotinsprill.configuration.BotConfig
 import net.insprill.robotinsprill.ocr.Tesseract
@@ -92,7 +93,8 @@ class RobotInsprill(val logger: KLogger, val kord: Kord) {
         commandManager.registerCommands(
             listOf(
                 CustomCommand.buildCommandArray(this.config),
-                Clear(this)
+                Clear(this),
+                SelectRoles(this),
             ).flatMap {
                 @Suppress("UNCHECKED_CAST")
                 if (it is Iterable<*>) return@flatMap it as Iterable<SlashCommand> else return@flatMap listOf(it as SlashCommand)
