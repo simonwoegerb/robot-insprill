@@ -354,7 +354,7 @@ auto-actions:
       - BIN
       - IMAGE
     actions:
-      - pattern: "FileNotFoundException: Jar does not contain plugin.yml"
+      - pattern: "Jar does not contain plugin.yml"
         responses:
           - embeds:
               - title: You forgot to add a `plugin.yml`, or it's in the wrong location.
@@ -385,6 +385,252 @@ auto-actions:
                   You may only have upper and lowercase letters, numbers, and underscores.
 
                   [More information about the plugin.yml](https://www.spigotmc.org/wiki/plugin-yml/)
+      - pattern: "authors are of wrong type"
+        responses:
+          - embeds:
+              - title: The `authors` section of your plugin.yml isn't defined correctly!
+                description: |-
+                  When using `authors`, it must be defined as a list. For example,
+                  ```yaml
+                  authors: [ Insprill ]
+                  ```or
+                  ```yaml
+                  authors:
+                    - Insprill
+                  ```
+                  If you only have a single author, you can use `author` instead and define it normally.
+                  ```yaml
+                  author: Insprill
+                  ```
+
+                  [More information about the plugin.yml](https://www.spigotmc.org/wiki/plugin-yml/)
+      - pattern: "commands are of wrong type.*class java.lang.String cannot be cast to class java.util.Map"
+        responses:
+          - embeds:
+              - title: The `commands` section of your plugin.yml isn't defined correctly!
+                description: |-
+                  You most likely forgot to put a `:` at the end of your command name.
+                  Even if the command doesn't have any additional information defined in the plugin.yml, you still must end it with a `:`.
+
+                  For example:
+                  ```yaml
+                  commands:
+                    hello:
+                  ```
+                  [More information about the plugin.yml](https://www.spigotmc.org/wiki/plugin-yml/)
+      - pattern: "Unsupported API version"
+        responses:
+          - embeds:
+              - title: You specified an invalid API version!
+                description: |-
+                  You either chose an API version that isn't valid, or is newer than your server.
+                  API versions are *major* versions from 1.13 and up. (e.g. `1.13`, `1.14`, `1.15`, etc). Anything below 1.13 is not valid.
+                  Older versions didn't have this field, so specifying it won't hurt anything. A plugin with a 1.13 API version will gladly run on a 1.12 server.
+
+                  [More information about the plugin.yml](https://www.spigotmc.org/wiki/plugin-yml/)
+      - pattern: "name is not defined"
+        responses:
+          - embeds:
+              - title: You forgot to specify your plugin's name!
+                description: |-
+                  In your plugin.yml, make sure to provide a name for your plugin.
+                  ```yaml
+                  name: MyPlugin
+                  ```
+                  [More information about the plugin.yml](https://www.spigotmc.org/wiki/plugin-yml/)
+      - pattern: "Could not load.*in folder.*Restricted Name"
+        responses:
+          - embeds:
+              - title: Your plugin name is restricted.
+                description: |-
+                  Your plugin's may not be `bukkit`, `minecraft`, or `mojang`.
+
+                  [More information about the plugin.yml](https://www.spigotmc.org/wiki/plugin-yml/)
+      - pattern: "load is not a valid choice"
+        responses:
+          - embeds:
+              - title: Your plugins `load` parameter is not valid.
+                description: |-
+                  `load` must be set to `STARTUP` or `POSTWORLD`. Any other options are not valid.
+
+                  [More information about the plugin.yml](https://www.spigotmc.org/wiki/plugin-yml/)
+      - pattern: "Cannot find main class"
+        responses:
+          - embeds:
+              - title: The server couldn't find the main class of your plugin!
+                description: |-
+                  Ensure you provided the `main` field in your plugin.yml, and that it is typed correctly.
+
+                  A proper main should look like the following:
+                  ```yaml
+                  main: me.insprill.myplugin.Main
+                  ```
+                  If you have it specified and are still getting this error, you most likely have a typo. Double, triple, and quadruple check the package and class name you provided matches the actual name of the package and class name.
+
+                  [More information about the plugin.yml](https://www.spigotmc.org/wiki/plugin-yml/)
+      - pattern: "Do not use \\\\t\\(TAB\\) for indentation"
+        responses:
+          - embeds:
+              - title: You cannot use tabs in YAML files!
+                description: |-
+                  When writing YAML files, you may *not* use tabs! Simply replace any tabs with two or four spaces and you'll be good to go.
+
+                  To check if your YAML files are syntactically correct, you can run them though [yamlchecker.com](https://yamlchecker.com/).
+      - pattern: "CommandSender cannot be cast to org\\.bukkit\\.entity\\.Player"
+        responses:
+          - embeds:
+              - title: Looks like you're trying to cast a command's sender to a Player without checking if it is one!
+                description: |-
+                  Before blindly casting a command's sender to a player, you need to check if it actually *is* a player!
+
+                  You can use a simple `instanceof` check for this.
+                  ```java
+                  if (sender instanceof Player) {
+                    // Do the thing
+                  }
+                  ```
+                  If your command should only be able to be run by players, you can fast-fail with the following code at the top of your command.
+                  ```java
+                  if (!(sender instanceof Player)) {
+                    sender.sendMessage(ChatColor.RED + "This command can only be executed as a player!");
+                    return true;
+                  }
+                  ```
+      - pattern: "OfflinePlayer cannot be cast to org\\.bukkit\\.entity\\.Player"
+        responses:
+          - embeds:
+              - title: You cannot cast an OfflinePlayer to a Player!
+                description: |-
+                  To get a Player from an OfflinePlayer, you must use the `#getPlayer` method.
+                  If the player isn't online, this will return null.
+                  You can check if the player is online with `#isOnline`.
+
+                  For example:
+                  ```java
+                  OfflinePlayer offlinePlayer = ...
+                  if (!offlinePlayer.isOnline()) {
+                    return;
+                  }
+                  Player player = offlinePlayer.getPlayer()
+                  ```
+      - pattern: "Plugin already initialized"
+        responses:
+          - embeds:
+              - title: You cannot extend JavaPlugin in more than one class, or create new instances of your main class!
+                description: |-
+                  If you're extending JavaPlugin in more than one class, or are calling `new` on your main class, stop!
+
+                  Instead, what you want to do, is pass in an instance of your main class to whatever other class needs it.
+                  ```java
+                  private final JavaPlugin plugin;
+                  public ClassName(JavaPlugin plugin) {
+                    this.plugin = plugin;
+                  }
+                  ```With this, you can access all the normal JavaPlugin methods off of the `plugin` parameter. (e.g. `plugin.getConfig()`).
+
+                  If you have something specific in your main class you need to access, you can replace `JavaPlugin` with the name of your class.
+                  When you create a new instance of this class from your main class, you will now have to pass in `this` to the constructor like so: `new ClassName(this);`.
+      - pattern: "No public constructor"
+        responses:
+          - embeds:
+              - title: Your main class isn't `public`, or doesn't have a public constructor!
+                description: |-
+                  Your main class must be defined as `public`. This can be done by adding `public` infront of `class`.
+                  For example,
+                  ```java
+                  public class MyPlugin extends JavaPlugin {
+                    // ...
+                  }
+                  ```
+                  If your main class is already public, it must also have a public constructor!
+                  By default it will already have a public constructor unless you've explicitly added a private one.
+      - pattern: "Abnormal plugin type"
+        responses:
+          - embeds:
+              - title: Your main class doesn't have a default constructor!
+                description: |-
+                  Your main class must have a default constructor. This is a public constructor with no parameters.
+                  By default, your main class will already have one of these unless you define a custom one for use with something like [MockBukkit](https://github.com/MockBukkit/MockBukkit).
+
+                  If that's the case, you can re-add the default constructor with the following code:
+                  ```java
+                  public MyPlugin() {
+                  }
+                  ```Replace `MyPlugin` with the name of your main class.
+      - pattern: "The embedded resource.*cannot be found in"
+        responses:
+          - embeds:
+              - title: Your forgot to add a default file in your plugin, or put it in the wrong place.
+                description: |-
+                  Make sure it's in the same location as your plugin.yml.
+      - pattern: "Loaded class.*which is not a depend, softdepend, or loadbefore of this plugin"
+        responses:
+          - embeds:
+              - title: When using other plugins' APIs, you must specify that in your plugin.yml.
+                description: |-
+                  This can be done in one of three ways, two of which are most common.
+
+                  If your plugin *cannot* function without the other plugin on the server, add it to the `depend` list.
+                  ```yaml
+                  depend:
+                    - SomeOtherPlugin
+                  ```
+                  If your plugin *can* function without the other plugin on the server, add it to the `softDepend` list.
+                  ```yaml
+                  softDepend:
+                    - SomeOtherPlugin
+                  ```
+      - pattern: "main class.*does not extend JavaPlugin"
+        responses:
+          - embeds:
+              - title: You forgot to extend `JavaPlugin` in your main class!
+                description: |-
+                  For the server to load your plugin, your main class must extend `JavaPlugin`.
+                  For example,
+                  ```java
+                  public class MyPlugin extends JavaPlugin {
+                    // ...
+                  }
+                  ```
+      - pattern: "Cannot make player fly if getAllowFlight\\(\\) is false"
+        responses:
+          - embeds:
+              - title: You must allow players to fly before you set them to flying!
+                description: |-
+                  Before enabling flight for a player, you must allow them to fly with the `#setAllowFlight` method. For example:
+                  ```java
+                  player.setAllowFlight(true); // This must be first!
+                  player.setFlying(true);
+                  ```
+      - pattern: "Invalid key. Must be \\[a\\-z0\\-9\\/\\._-\\]"
+        responses:
+          - embeds:
+              - title: Your Namespaced Key is invalid!
+                description: |-
+                  Namespaced Key's may only contain lowercase letters, numbers, underscores, hyphens, and forward slashes.
+      - pattern: "NamespacedKey must be less than 256 characters"
+        responses:
+          - embeds:
+              - title: Your Namespaced Key is too long!
+                description: |-
+                  Namespaced Key's must be *less* than 256 characters long.
+      - pattern: "Duplicate recipe ignored with ID"
+        responses:
+          - embeds:
+              - title: You have multiple recipes with the same ID, or registered the same one twice!
+                description: |-
+                  Make sure your recipes all have unique ID's, and that you check if they're already registered before re-registering them.
+      - pattern: "has been compiled by a more recent version of the Java Runtime.*this version of the Java Runtime only recognizes class file versions up to"
+        responses:
+          - embeds:
+              - title: You compiled your plugin with a Java version newer than what your server is running!
+                description: |-
+                  Java can load .jar files compiled with older versions of Java, but not with newer ones.
+
+                  The general rule-of-thumb is for 1.8-1.16 your plugin should be compiled with Java 8. For 1.17, it should be compiled with Java 16. For anything newer, it should be compiled with Java 17.
+
+                  You can find out what version of Java you have by running `java -version` in a terminal.
+
 
 statistic-channels:
   - channel-id: 821976647863238696
