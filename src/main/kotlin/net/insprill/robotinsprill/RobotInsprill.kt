@@ -55,7 +55,9 @@ class RobotInsprill(val logger: KLogger, val kord: Kord) {
     val config: BotConfig
 
     init {
-        logger.info("Starting Robot Insprill")
+        val metadata = Metadata()
+
+        logger.info("Starting Robot Insprill v${metadata.version}")
 
         logger.info("Searching for configuration file")
         val defaultConfigFile = File("config.yml")
@@ -138,3 +140,5 @@ class RobotInsprill(val logger: KLogger, val kord: Kord) {
     }
 
 }
+
+data class Metadata(val version: String = "{build.version}")

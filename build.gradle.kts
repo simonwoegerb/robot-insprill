@@ -1,14 +1,15 @@
-import java.io.ByteArrayOutputStream
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
     kotlin("jvm") version "1.8.10"
     kotlin("plugin.serialization") version "1.8.10"
     id("com.github.johnrengelman.shadow") version "7.1.2"
+    id("net.kyori.blossom") version "1.3.1"
+    id("org.ajoberstar.grgit") version "5.0.0"
 }
 
 group = "net.insprill"
-version = getFullVersion()
+version = "${project.version}+${versionMetadata()}"
 
 repositories {
     mavenCentral()
@@ -61,26 +62,34 @@ tasks {
     }
 }
 
+blossom {
+    val clazz = "src/main/kotlin/net/insprill/robotinsprill/RobotInsprill.kt"
+    fun repl(token: String, value: Any?) {
+        replaceToken("\"{$token}\"", "\"$value\"", clazz)
+    }
+    repl("build.version", version)
+}
+
 java {
     toolchain {
         languageVersion.set(JavaLanguageVersion.of(17))
     }
 }
 
-fun getFullVersion(): String {
-    val version = project.property("version")!! as String
-    return if (version.contains("-SNAPSHOT")) {
-        "$version+rev.${getGitHash()}"
-    } else {
-        version
+fun versionMetadata(): String {
+    // CI builds only
+    val buildId = System.getenv("GITHUB_RUN_NUMBER")
+    if (buildId != null) {
+        return "build.${buildId}"
     }
-}
 
-fun getGitHash(): String {
-    val stdout = ByteArrayOutputStream()
-    exec {
-        commandLine("git", "rev-parse", "--verify", "--short", "HEAD")
-        standardOutput = stdout
+    val head = grgit.head()
+    var id = head.abbreviatedId
+
+    // Flag the build if the build tree is dirty
+    if (!grgit.status().isClean) {
+        id += "-dirty"
     }
-    return stdout.toString().trim()
+
+    return "rev.${id}"
 }
