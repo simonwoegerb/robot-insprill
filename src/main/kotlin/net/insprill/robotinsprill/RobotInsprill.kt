@@ -27,6 +27,7 @@ import net.insprill.robotinsprill.command.slash.SelectRoles
 import net.insprill.robotinsprill.command.slash.SlashCommand
 import net.insprill.robotinsprill.configuration.BotConfig
 import net.insprill.robotinsprill.ocr.Tesseract
+import net.insprill.robotinsprill.restriction.RestrictionManager
 import net.insprill.robotinsprill.statistic.StatisticManager
 
 suspend fun main() {
@@ -41,6 +42,7 @@ suspend fun main() {
     }
     RobotInsprill(logger, kord)
         .registerCommands()
+        .registerRestrictions()
         .registerAuditEvents()
         .registerLoginEvents()
         .registerAutoActions()
@@ -106,6 +108,10 @@ class RobotInsprill(val logger: KLogger, val kord: Kord) {
                 Google(this),
             )
         )
+    }
+
+    fun registerRestrictions() = apply {
+        RestrictionManager(this).registerEvents()
     }
 
     fun registerAuditEvents() = apply {

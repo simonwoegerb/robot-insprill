@@ -9,6 +9,7 @@ import dev.kord.rest.builder.message.EmbedBuilder
 import kotlinx.datetime.Instant
 import net.insprill.robotinsprill.autoaction.MediaType
 import net.insprill.robotinsprill.codebin.BinService
+import net.insprill.robotinsprill.restriction.MessageType
 import net.insprill.robotinsprill.statistic.Statistic
 
 data class BotConfig(
@@ -18,6 +19,7 @@ data class BotConfig(
     val audit: Audit,
     val statisticChannels: List<StatisticChannel>,
     val autoActions: List<AutoAction>,
+    val restrictedChannels: List<RestrictedChannel>
 ) {
     data class Commands(val message: MessageCmd, val slash: Slash) {
         data class MessageCmd(val binfiles: BinFiles, val googleThat: GoogleThat) {
@@ -168,7 +170,7 @@ data class BotConfig(
     ) {
         data class Action(val pattern: Regex, val reactions: Set<Emoji>?, val responses: List<Message>?)
     }
-
+    data class RestrictedChannel (val channelId: Snowflake, val message: Message, val types: List<MessageType>)
     fun validate(): String? {
         if (codebin.upload == BinService.PASTEBIN && System.getenv("PASTEBIN_API_KEY") == null) {
             return "The PASTEBIN_API_KEY environment variable must be set to do uploads to pastebin!"
