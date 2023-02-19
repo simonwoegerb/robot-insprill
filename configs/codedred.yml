@@ -633,7 +633,7 @@ auto-actions:
 
 
 statistic-channels:
-  - channel-id: 821976647863238696
+  - channel-id: 1076891872951291964
     format: "CodedRed Subs: %s"
     statistic: YOUTUBE_SUBS
     data: UC_kPUW3XPrCCRT9a4Pnf1Tg
