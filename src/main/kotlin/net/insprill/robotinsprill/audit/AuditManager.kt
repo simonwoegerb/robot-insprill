@@ -5,6 +5,7 @@ import dev.kord.core.behavior.channel.createEmbed
 import dev.kord.core.entity.User
 import dev.kord.core.entity.channel.MessageChannel
 import dev.kord.rest.builder.message.EmbedBuilder
+import kotlinx.datetime.Clock
 import net.insprill.robotinsprill.RobotInsprill
 import net.insprill.robotinsprill.audit.category.AuditMembers
 import net.insprill.robotinsprill.audit.category.AuditMessages
@@ -55,14 +56,15 @@ class AuditManager(private val robot: RobotInsprill) {
         title: String,
         description: String?
     ): EmbedBuilder.() -> Unit {
-        val footer = "User ID: ${user.id.value} • <t:${System.currentTimeMillis() / 1000}:f>"
         return {
             author {
                 name = user.tag
                 icon = user.avatar?.url
             }
             this.color = color.color
-            this.description = "**$title**\n\n${if (!description.isNullOrBlank()) "$description\n\n" else ""}$footer"
+            this.description = "**$title**\n\n$description"
+            this.footer = EmbedBuilder.Footer().apply { text = "User ID: ${user.id.value}" }
+            this.timestamp = Clock.System.now()
         }
     }
 
@@ -71,10 +73,13 @@ class AuditManager(private val robot: RobotInsprill) {
         title: String,
         footer: String?,
     ): EmbedBuilder.() -> Unit {
-        val finalFooter = "${if (footer != null) "$footer • " else ""}<t:${System.currentTimeMillis() / 1000}:f>"
         return {
             this.color = color.color
-            this.description = "**$title**\n\n$finalFooter"
+            this.description = "**$title**"
+            footer?.let {
+                this.footer = EmbedBuilder.Footer().apply { text = it }
+                this.timestamp = Clock.System.now()
+            }
         }
     }
 
