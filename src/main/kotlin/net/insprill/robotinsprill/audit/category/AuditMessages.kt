@@ -26,6 +26,7 @@ class AuditMessages(robot: RobotInsprill, audit: AuditManager) : AuditCategory(r
         }
         event<MessageUpdateEvent>(config.edited) {
             if (isIgnored(channelId)) return@event
+            if (new.content.value === null) return@event
             send(
                 getMessage().author,
                 AuditColor.ORANGE,
