@@ -638,6 +638,17 @@ statistic-channels:
     statistic: YOUTUBE_SUBS
     data: UC_kPUW3XPrCCRT9a4Pnf1Tg
 
+restricted-channels:
+  - channel-id: 687725347051274304
+    message:
+      text: |-
+        This channel is only for showcasing projects! To discuss something you've seen here, please create a thread.
+    types:
+      - IMAGE
+      - VIDEO
+      - LINK
+      - ATTACHMENT
+
 codebin:
   upload: LUCKO_PASTE
   services:
