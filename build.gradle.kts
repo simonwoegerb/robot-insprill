@@ -13,7 +13,7 @@ version = "${project.version}+${versionMetadata()}"
 
 repositories {
     mavenCentral()
-    maven("https://oss.sonatype.org/content/repositories/snapshots") // Kord 0.8 SNAPSHOT, Tesseract Platform 5.3 SNAPSHOT
+    maven("https://oss.sonatype.org/content/repositories/snapshots") // Kord 0.8 SNAPSHOT
 }
 
 dependencies {
@@ -31,7 +31,7 @@ dependencies {
     implementation("com.github.kittinunf.fuel:fuel-kotlinx-serialization:2.3.1")
 
     // OCR
-    implementation("org.bytedeco:tesseract-platform:5.3.0-1.5.9-SNAPSHOT")
+    implementation("org.bytedeco:tesseract-platform:5.2.0-1.5.8")
 
     // Logging
     implementation("ch.qos.logback:logback-classic:1.4.5")
