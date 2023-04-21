@@ -1,9 +1,7 @@
-import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
-
 plugins {
-    kotlin("jvm") version "1.8.10"
-    kotlin("plugin.serialization") version "1.8.10"
-    id("com.github.johnrengelman.shadow") version "7.1.2"
+    kotlin("jvm") version "1.8.20"
+    kotlin("plugin.serialization") version "1.8.20"
+    id("com.github.johnrengelman.shadow") version "8.1.1"
     id("net.kyori.blossom") version "1.3.1"
     id("org.ajoberstar.grgit") version "5.0.0"
 }
@@ -20,9 +18,9 @@ dependencies {
     implementation("dev.kord:kord-core:0.8.3")
 
     // Configuration
-    implementation("com.sksamuel.hoplite:hoplite-core:2.7.1")
-    implementation("com.sksamuel.hoplite:hoplite-yaml:2.7.1")
-    implementation("com.sksamuel.hoplite:hoplite-datetime:2.7.1")
+    implementation("com.sksamuel.hoplite:hoplite-core:2.7.3")
+    implementation("com.sksamuel.hoplite:hoplite-yaml:2.7.3")
+    implementation("com.sksamuel.hoplite:hoplite-datetime:2.7.3")
 
     // Web requests
     implementation("com.github.kittinunf.fuel:fuel:2.3.1")
@@ -33,13 +31,13 @@ dependencies {
     implementation("org.bytedeco:tesseract-platform:5.2.0-1.5.8")
 
     // Logging
-    implementation("ch.qos.logback:logback-classic:1.4.5")
-    implementation("io.github.microutils:kotlin-logging-jvm:3.0.4")
+    implementation("ch.qos.logback:logback-classic:1.4.7")
+    implementation("io.github.microutils:kotlin-logging-jvm:3.0.5")
 }
 
 tasks {
-    withType<KotlinCompile> {
-        kotlinOptions.jvmTarget = "17"
+    kotlin {
+        jvmToolchain(17)
     }
 
     jar {
@@ -67,12 +65,6 @@ blossom {
         replaceToken("\"{$token}\"", "\"$value\"", clazz)
     }
     repl("build.version", version)
-}
-
-java {
-    toolchain {
-        languageVersion.set(JavaLanguageVersion.of(17))
-    }
 }
 
 fun versionMetadata(): String {
