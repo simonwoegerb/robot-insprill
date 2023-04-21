@@ -170,7 +170,9 @@ data class BotConfig(
     ) {
         data class Action(val pattern: Regex, val reactions: Set<Emoji>?, val responses: List<Message>?)
     }
-    data class RestrictedChannel (val channelId: Snowflake, val message: Message, val types: List<MessageType>)
+
+    data class RestrictedChannel(val channelId: Snowflake, val message: Message, val types: List<MessageType>)
+
     fun validate(): String? {
         if (codebin.upload == BinService.PASTEBIN && System.getenv("PASTEBIN_API_KEY") == null) {
             return "The PASTEBIN_API_KEY environment variable must be set to do uploads to pastebin!"
