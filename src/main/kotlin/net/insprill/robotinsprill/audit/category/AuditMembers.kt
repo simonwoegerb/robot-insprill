@@ -1,5 +1,6 @@
 package net.insprill.robotinsprill.audit.category
 
+import dev.kord.common.entity.Snowflake
 import dev.kord.core.event.guild.BanAddEvent
 import dev.kord.core.event.guild.BanRemoveEvent
 import dev.kord.core.event.guild.MemberJoinEvent
@@ -11,6 +12,8 @@ import net.insprill.robotinsprill.audit.AuditColor
 import net.insprill.robotinsprill.audit.AuditManager
 
 class AuditMembers(robot: RobotInsprill, audit: AuditManager) : AuditCategory(robot, audit) {
+
+    private val voiceChannels: MutableMap<Snowflake, Snowflake> = HashMap()
 
     override fun registerEvents() {
         val config = robot.config.audit.events.members
@@ -61,17 +64,22 @@ class AuditMembers(robot: RobotInsprill, audit: AuditManager) : AuditCategory(ro
         }
         event<VoiceStateUpdateEvent>(config.voice) {
             if (state.guildId != robot.config.guildId) return@event
+            val member = state.getMember()
+            val memberId = member.id
             if (state.channelId == null) {
+                voiceChannels.remove(memberId)
                 send(
-                    state.getMember(),
+                    member,
                     AuditColor.RED,
-                    "<@${state.getMember().id}> has left <#${old?.channelId}>."
+                    "<@${memberId}> has left <#${old?.channelId}>."
                 )
             } else {
+                if (voiceChannels[memberId] == state.channelId) return@event
+                voiceChannels[memberId] = state.channelId!!
                 send(
-                    state.getMember(),
+                    member,
                     AuditColor.GREEN,
-                    "<@${state.getMember().id}> has joined <#${state.channelId}>."
+                    "<@${memberId}> has joined <#${state.channelId}>."
                 )
             }
         }
