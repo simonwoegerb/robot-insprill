@@ -12,7 +12,6 @@ import dev.kord.gateway.Intent
 import dev.kord.gateway.PrivilegedIntent
 import java.io.File
 import java.nio.file.Files
-import java.util.*
 import kotlin.system.exitProcess
 import mu.KLogger
 import mu.KotlinLogging

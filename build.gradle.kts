@@ -13,12 +13,11 @@ version = "${project.version}+${versionMetadata()}"
 
 repositories {
     mavenCentral()
-    maven("https://oss.sonatype.org/content/repositories/snapshots") // Kord 0.8 SNAPSHOT
 }
 
 dependencies {
     // Discord
-    implementation("dev.kord:kord-core:0.8.x-SNAPSHOT")
+    implementation("dev.kord:kord-core:0.8.3")
 
     // Configuration
     implementation("com.sksamuel.hoplite:hoplite-core:2.7.1")
