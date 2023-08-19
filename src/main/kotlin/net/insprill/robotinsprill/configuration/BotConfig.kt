@@ -6,9 +6,13 @@ import dev.kord.common.entity.Snowflake
 import dev.kord.common.entity.optional.OptionalBoolean
 import dev.kord.core.entity.ReactionEmoji
 import dev.kord.rest.builder.message.EmbedBuilder
+import dev.kord.rest.builder.message.create.MessageCreateBuilder
+import kotlin.contracts.ExperimentalContracts
+import kotlin.contracts.contract
 import kotlinx.datetime.Instant
 import net.insprill.robotinsprill.autoaction.MediaType
 import net.insprill.robotinsprill.codebin.BinService
+import net.insprill.robotinsprill.form.FieldSize
 import net.insprill.robotinsprill.restriction.MessageType
 import net.insprill.robotinsprill.statistic.Statistic
 
@@ -19,7 +23,8 @@ data class BotConfig(
     val audit: Audit,
     val statisticChannels: List<StatisticChannel>,
     val autoActions: List<AutoAction>,
-    val restrictedChannels: List<RestrictedChannel>
+    val restrictedChannels: List<RestrictedChannel>,
+    val forms: Forms
 ) {
     data class Commands(val message: MessageCmd, val slash: Slash) {
         data class MessageCmd(val binfiles: BinFiles, val googleThat: GoogleThat) {
@@ -27,7 +32,12 @@ data class BotConfig(
             data class GoogleThat(val enabled: Boolean)
         }
 
-        data class Slash(val custom: List<CustomCommand>, val clear: Clear, val selectRoles: SelectRoles) {
+        data class Slash(
+            val custom: List<CustomCommand>,
+            val clear: Clear,
+            val selectRoles: SelectRoles,
+            val post: Post
+        ) {
             data class CustomCommand(
                 val name: String,
                 val description: String,
@@ -45,6 +55,8 @@ data class BotConfig(
             ) {
                 data class Roles(val id: Snowflake, val emoji: Emoji?)
             }
+
+            data class Post(val enabled: Boolean)
         }
     }
 
@@ -98,6 +110,14 @@ data class BotConfig(
     )
 
     data class Message(val text: String?, val embeds: List<Embed>?) {
+
+        fun toBuilder(): MessageCreateBuilder.() -> Unit {
+            return {
+                content = text
+                if (embeds.isNotEmpty()) embeds.addAll(embeds()!!)
+            }
+        }
+
         data class Embed(
             var author: EmbedAuthor?,
             val title: String?,
@@ -178,6 +198,64 @@ data class BotConfig(
             return "The PASTEBIN_API_KEY environment variable must be set to do uploads to pastebin!"
         }
         return null
+    }
+
+    data class Forms(val list: List<Form>, val messages: Map<String, Message>?) {
+
+        @OptIn(ExperimentalContracts::class)
+        fun findMessage(key: String, default: String?): Message? {
+            contract {
+                returnsNotNull() implies (default != null)
+            }
+
+            val def = if (default != null) Message(default, null) else null
+
+            if (messages == null) return def
+
+            val msg = messages[key]?.takeIf { it.text?.isNotBlank() == true }
+
+            return msg ?: def
+        }
+
+        data class Form(
+            val name: String,
+            val channel: Snowflake,
+            val color: Color,
+            val completable: Boolean,
+            val fields: List<Field>,
+            val addContact: Boolean?,
+            val formsOnly: Boolean?
+        ) {
+
+            fun getInputFields(): List<Field> {
+                return fields.filterNot { it.isPostSubmission == true }
+            }
+
+            fun getPostSubmissionFields(): List<Field> {
+                return fields.filter { it.isPostSubmission == true }
+            }
+
+            fun getDisplayFields(): List<Field> {
+                return fields.filterNot { it.isImage == true }
+            }
+
+            data class Field(
+                val size: FieldSize?,
+                val isEmbedTitle: Boolean?,
+                val isNumber: Boolean?,
+                val name: String,
+                val min: Int?,
+                val max: Int?,
+                val inline: Boolean?,
+                val isImage: Boolean?,
+                val optional: Boolean?,
+                val isPostSubmission: Boolean?
+            ) {
+                fun range(): IntRange {
+                    return (min ?: 0)..(max ?: 4000)
+                }
+            }
+        }
     }
 }
 
