@@ -86,7 +86,6 @@ codebin:
       - sourceb.in
     LUCKO_PASTE:
       - paste.insprill.net
-      - paste.mufin.live
     PASTEBIN:
       - pastebin.com
 

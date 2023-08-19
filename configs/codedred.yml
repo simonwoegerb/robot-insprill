@@ -675,9 +675,9 @@ forms:
           size: LONG
         - name: Budget (USD)
           is-number: true
-          min: 1
+          min: 10
           max: 1000
-        - name: Example picture
+        - name: Example picture (URL)
           optional: true
           is-image: true
 
@@ -691,7 +691,6 @@ codebin:
       - sourceb.in
     LUCKO_PASTE:
       - paste.insprill.net
-      - paste.mufin.live
     PASTEBIN:
       - pastebin.com
 
