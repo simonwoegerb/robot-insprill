@@ -25,6 +25,10 @@ commands:
           emoji:
             name: kingPeppo
             id: 599402709921300511
+        - id: 1182775685463408760
+          emoji:
+            name: SpaghettiCode
+            id: 767150167967137823
         - id: 706715185032855603
           emoji:
             name: youtube
