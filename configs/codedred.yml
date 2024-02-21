@@ -208,6 +208,24 @@ commands:
         description: Halp!1!!!111!1
         response:
           text: https://imgur.com/2STmzue.png
+      - name: mwe
+        description: Explains how to create a Minimum Working Example
+        response:
+          embeds:
+            - title: Minimum Working Examples
+              url: https://stackoverflow.com/help/minimal-reproducible-example
+              author:
+                name: Auster
+              description: |-
+              When asking a debugging question, people will be better able to provide help if you provide code as text in your question that prospective answerers can easily understand and use to reproduce the problem.
+              This is variously referred to as creating a "minimal, reproducible example" (MRE), a "minimal, complete and verifiable example" (MCVE),
+              a "minimal, workable example" (MWE), or a "reprex". Regardless of how it's communicated to you, it boils down to ensuring you have included code in your question that follows the following guidlines:
+              Your code examples should be…
+              Minimal: Use as little code as possible that still produces the same problem
+              Complete: Provide all parts someone else needs to reproduce your problem in the question itself
+              Reproducible: Test the code you're about to provide to make sure it reproduces the problem
+
+              The rest of this help article provides guidance on these aspects of writing a minimal, reproducible example.
       - name: hashmap
         description: Explains how HashMaps work
         response:
